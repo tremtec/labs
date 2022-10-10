@@ -1,10 +1,11 @@
 import { Handler } from "$fresh/server.ts";
-import { GitHubObject } from "./client.ts";
+import { GitHubObject } from "#/routes/api/auth/github/client.ts";
 
 export const handler: Handler = async (req, ctx) => {
   console.log({ req, ctx });
-  const userProfile = await GitHubObject.code.processAuth(req.url);
+  const url = new URL(req.url);
   const qs = new URLSearchParams(req.url);
+  const userProfile = await GitHubObject.code.processAuth(url);
 
   return new Response(
     JSON.stringify({
