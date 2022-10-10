@@ -7,13 +7,11 @@ export const handler: Handler = async (req, ctx) => {
   const qs = new URLSearchParams(req.url);
   const userProfile = await GitHubObject.code.processAuth(url);
 
-  return new Response(
-    JSON.stringify({
-      error: qs.get("error"),
-      error_description: qs.get("error_description"),
-      // WIP: save code & state on cookies
-      code: qs.get("code"),
-      userProfile,
-    }),
-  );
+  return Response.json({
+    error: qs.get("error"),
+    error_description: qs.get("error_description"),
+    // WIP: save code & state on cookies
+    code: qs.get("code"),
+    userProfile,
+  });
 };
