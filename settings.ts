@@ -1,7 +1,4 @@
-import { config } from "dotenv";
-
-// load env configs
-const envConfig = config()
+import "dotenv";
 
 export const site = {
   name: "TremTec",
@@ -13,8 +10,6 @@ export const site = {
 };
 
 export const github = {
-  clientId: envConfig.GITHUB_CLIENT_ID,
-  clientSecret: envConfig.GITHUB_CLIENT_SECRET,
+  clientId: Deno.env.get("GITHUB_CLIENT_ID") ?? '',
+  clientSecret: Deno.env.get("GITHUB_CLIENT_SECRET") ?? '',
 }
-
-console.log(config());
