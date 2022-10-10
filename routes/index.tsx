@@ -9,9 +9,11 @@ export default function Home() {
         {site.name}
       </h1>
 
-      <h2>
-        {site.subTitle}
-      </h2>
+      <h2>{site.subTitle}</h2>
+
+      <form action="/api/auth/github">
+        <button title="login via github">Github</button>
+      </form>
     </div>
   );
 }
