@@ -3,8 +3,8 @@ import { GitHubObject } from "./client.ts";
 
 export const handler: Handler = async (req, ctx) => {
   console.log({ req, ctx });
-  const qs = new URLSearchParams(req.url);
   const userProfile = await GitHubObject.code.processAuth(req.url);
+  const qs = new URLSearchParams(req.url);
 
   return new Response(
     JSON.stringify({
