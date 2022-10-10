@@ -2,7 +2,7 @@ import { HandlerContext, Handlers } from "$fresh/server.ts";
 import { GitHubClient } from "denoauth";
 import { github } from "#/settings.ts";
 
-console.log(github)
+console.log(github);
 
 const GitHubObject = new GitHubClient({
   clientId: github.clientId,
