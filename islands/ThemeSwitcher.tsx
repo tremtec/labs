@@ -1,21 +1,19 @@
-import { signal } from "@preact/signals";
+import { useSignal } from "@preact/signals";
 import { useEffect } from "preact/hooks";
 import { Button } from "~/components/Button.tsx";
-import Sun from "../packages/icon/Sun.tsx";
-import Moon from "../packages/icon/Moon.tsx";
+import Moon from "~/icon/Moon.tsx";
+import Sun from "~/icon/Sun.tsx";
 
 type Theme = "dark" | "light";
 
-const selectedTheme = signal<Theme>(localStorage.theme ?? "dark");
-const toggleTheme = (theme: Theme): Theme => (theme === "dark" ? "light" : "dark");
-const iconTheme = (theme: Theme) => (theme === "dark" ? <Sun /> : <Moon />);
+type Props = {
+  theme?: Theme;
+};
 
-selectedTheme.subscribe((theme) => {
-  localStorage.theme = theme;
-});
-
-export default function ThemeSwitcher() {
+export default function ThemeSwitcher({ theme = "dark" }: Props) {
+  const selectedTheme = useSignal<Theme>(theme);
   const toggledTheme = toggleTheme(selectedTheme.value);
+
   const handleClick = () => {
     selectedTheme.value = toggledTheme;
   };
@@ -39,3 +37,7 @@ export default function ThemeSwitcher() {
     </Button>
   );
 }
+
+const toggleTheme = (theme: Theme): Theme => (theme === "dark" ? "light" : "dark");
+
+const iconTheme = (theme: Theme) => (theme === "dark" ? <Sun /> : <Moon />);
