@@ -1,7 +1,8 @@
-import { AppProps } from "$fresh/server.ts";
+import { PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
 import { site } from "#/settings.ts";
 import { NavBar } from "~/components/NavBar.tsx";
+import { Page, Layout } from "$fresh_layout/mod.ts";
 
 const headers = (
   <Head>
@@ -11,12 +12,15 @@ const headers = (
   </Head>
 );
 
-export default function _app({ Component }: AppProps) {
+const layout: Layout = (child: Page, props?: PageProps) => {
+  console.log({ props, child })
   return (
     <div class="dark:bg-black dark:text-white h-screen">
       {headers}
       <NavBar />
-      <Component />
+      {child(props)}
     </div>
   );
-}
+};
+
+export default layout

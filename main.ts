@@ -5,9 +5,12 @@
 /// <reference lib="deno.ns" />
 
 import { start } from "$fresh/server.ts";
-import manifest from "./fresh.gen.ts";
+import { applyManifestLayouts } from "$fresh_layout/mod.ts";
+import manifest from "#/fresh.gen.ts";
 
 import twindPlugin from "$fresh/plugins/twind.ts";
-import twindConfig from "./twind.config.ts";
+import twindConfig from "#/twind.config.ts";
+import { Manifest } from "$fresh_layout/src/deps.ts";
 
-await start(manifest, { plugins: [twindPlugin(twindConfig)] });
+const newManifest = applyManifestLayouts(manifest as Manifest)
+await start(newManifest, { plugins: [twindPlugin(twindConfig)] });
