@@ -13,10 +13,10 @@ const headers = (
 
 export default function _app({ Component }: AppProps) {
   return (
-    <>
+    <div class="dark:bg-black dark:text-white h-screen">
       {headers}
       <NavBar />
       <Component />
-    </>
+    </div>
   );
 }
