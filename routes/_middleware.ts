@@ -1,5 +1,10 @@
-import { cookieSession } from "$fresh_session/mod.ts";
+import { cookieSession, WithSession } from "$fresh_session/mod.ts";
+import { MiddlewareHandler } from "$fresh/server.ts";
 
-const session = cookieSession()
+const session = cookieSession();
 
-export const handler = [session];
+type State = WithSession & {
+  theme: string;
+};
+
+export const handler: MiddlewareHandler<State>[] = [session];

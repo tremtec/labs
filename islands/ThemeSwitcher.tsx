@@ -24,8 +24,9 @@ export default function ThemeSwitcher({ theme = "dark" }: Props) {
         // Change document theme
         document.body.classList.remove(toggleTheme(theme));
         document.body.classList.add(theme);
+        fetch("/", { method: "POST", body: theme });
       }),
-    []
+    [],
   );
 
   return (
@@ -38,6 +39,8 @@ export default function ThemeSwitcher({ theme = "dark" }: Props) {
   );
 }
 
-const toggleTheme = (theme: Theme): Theme => (theme === "dark" ? "light" : "dark");
+const toggleTheme = (
+  theme: Theme,
+): Theme => (theme === "dark" ? "light" : "dark");
 
 const iconTheme = (theme: Theme) => (theme === "dark" ? <Sun /> : <Moon />);

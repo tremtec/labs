@@ -7,7 +7,7 @@ export function Button(props: h.JSX.HTMLAttributes<HTMLButtonElement>) {
     props.class,
     "px-2 py-1 border(gray-100 2)",
     "hover:bg-gray-200 dark:hover:bg-gray-900",
-  )
+  );
 
   return (
     <button

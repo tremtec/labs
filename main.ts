@@ -12,5 +12,5 @@ import twindPlugin from "$fresh/plugins/twind.ts";
 import twindConfig from "#/twind.config.ts";
 import { Manifest } from "$fresh_layout/src/deps.ts";
 
-const newManifest = applyManifestLayouts(manifest as Manifest)
+const newManifest = applyManifestLayouts(manifest as Manifest);
 await start(newManifest, { plugins: [twindPlugin(twindConfig)] });
