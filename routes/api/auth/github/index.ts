@@ -1,5 +1,5 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
-import { GitHubObject } from "./client.ts";
+import { GitHubObject } from "#/routes/api/auth/github/client.ts";
 
 export const handler: Handlers = {
   GET(req: Request, ctx: HandlerContext) {
