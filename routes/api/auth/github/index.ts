@@ -3,8 +3,9 @@ import { GitHubObject } from "./client.ts";
 
 export const handler: Handlers = {
   GET(req: Request, ctx: HandlerContext) {
-    console.log({ req, ctx });
-    return Response.redirect(GitHubObject.code.createLink());
+    const redirectLink = GitHubObject.code.createLink();
+    console.log({ req, ctx, redirectLink });
+    return Response.redirect(redirectLink);
   },
 
   POST(req: Request, ctx: HandlerContext) {
