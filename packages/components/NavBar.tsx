@@ -1,16 +1,15 @@
 import ThemeSwitcher from "#/islands/ThemeSwitcher.tsx";
 import { site } from "#/settings.ts";
 import TremTecLogo from "~/icon/TremTecLogo.tsx";
-import { WithTheme } from "~/shared/types.ts";
 
-export const NavBar = (props: WithTheme) => (
+export const NavBar = () => (
   <div class="flex items-center justify-between gap-4 px-4 py-12 mx-auto max-w-screen-md">
     <a href="/">
       <Logo />
     </a>
 
     <div class="flex gap-2 justify-center items-center">
-      <ThemeSwitcher theme={props.theme} />
+      <ThemeSwitcher />
 
       <a href={site.repository} target="_blank">
         {githubIcon}
