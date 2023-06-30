@@ -43,7 +43,12 @@ function useTheme(theme: Theme) {
     applyDocumentClass();
   };
 
-  const toggle = (theme: Theme) => setTheme(theme === "dark" ? "light" : "dark");
+  const toggle = (theme: Theme) => {
+    theme = document.documentElement.classList.contains("dark")
+      ? "light"
+      : "dark"
+    return setTheme(theme)
+  };
 
   const system = () => setTheme("system");
 
