@@ -1,33 +1,21 @@
+import { JSX } from "preact";
+import { IS_BROWSER } from "$fresh/runtime.ts";
 import { useSignal } from "@preact/signals";
-import { useEffect } from "preact/hooks";
 import { Button } from "~/components/Button.tsx";
+import Gear from "~/icon/Gear.tsx";
 import Moon from "~/icon/Moon.tsx";
 import Sun from "~/icon/Sun.tsx";
 
-type Theme = "dark" | "light";
+type Theme = "dark" | "light" | "system";
 
-type Props = {
-  theme?: Theme;
-};
+type WithTheme = { theme: Theme };
 
-export default function ThemeSwitcher({ theme = "dark" }: Props) {
-  const selectedTheme = useSignal<Theme>(theme);
-  const toggledTheme = toggleTheme(selectedTheme.value);
+export default function ThemeSwitcher({ theme = "system" }: Partial<WithTheme>) {
+  const { selectedTheme, system, toggle } = useTheme(theme);
 
   const handleClick = () => {
-    selectedTheme.value = toggledTheme;
+    toggle(selectedTheme.value);
   };
-
-  useEffect(
-    () =>
-      selectedTheme.subscribe((theme) => {
-        // Change document theme
-        document.body.classList.remove(toggleTheme(theme));
-        document.body.classList.add(theme);
-        fetch("/", { method: "POST", body: theme });
-      }),
-    [],
-  );
 
   return (
     <Button
@@ -39,8 +27,45 @@ export default function ThemeSwitcher({ theme = "dark" }: Props) {
   );
 }
 
-const toggleTheme = (
-  theme: Theme,
-): Theme => (theme === "dark" ? "light" : "dark");
+function useTheme(theme: Theme) {
+  const selectedTheme = useSignal<Theme>(getThemeMode(theme, localStorage));
 
-const iconTheme = (theme: Theme) => (theme === "dark" ? <Sun /> : <Moon />);
+  const setTheme = (theme: Theme) => {
+    selectedTheme.value = theme;
+    localStorage.theme = theme;
+    applyDocumentClass();
+  };
+
+  const toggle = (theme: Theme) => setTheme(theme === "dark" ? "light" : "dark");
+
+  const system = () => setTheme("system");
+
+  return {
+    system,
+    toggle,
+    selectedTheme,
+  };
+}
+
+const themeIconMap: Record<Theme, JSX.Element> = {
+  dark: <Sun />,
+  light: <Moon />,
+  system: <Gear />,
+}
+
+const iconTheme = (theme: Theme) => themeIconMap[theme];
+
+function getThemeMode(prev: Theme, localStorage: Storage): Theme {
+  if (!IS_BROWSER) return prev;
+  if (localStorage.theme) return localStorage.theme as Theme;
+  return "system";
+}
+
+function applyDocumentClass() {
+  const isDark = localStorage.theme
+    ? window.localStorage.theme === "dark"
+    : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+}
+
+export const initialLoadTheme = `(${String(applyDocumentClass)})()`;
