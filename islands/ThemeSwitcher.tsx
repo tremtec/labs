@@ -6,20 +6,15 @@ import Gear from "~/icon/Gear.tsx";
 import Moon from "~/icon/Moon.tsx";
 import Sun from "~/icon/Sun.tsx";
 
-type Theme = "dark" | "light" | "system";
-
-type WithTheme = { theme: Theme };
+import { Theme, WithTheme } from "~/shared/types.ts";
 
 export default function ThemeSwitcher({ theme = "system" }: Partial<WithTheme>) {
   const { selectedTheme, system, toggle } = useTheme(theme);
 
-  const handleClick = () => {
-    toggle(selectedTheme.value);
-  };
-
   return (
     <Button
-      onClick={handleClick}
+      onClick={() => toggle(selectedTheme.value)}
+      onContextMenu={() => system()}
       class="border-none rounded-full p-2 active:outline-none focus:outline-none"
     >
       {iconTheme(selectedTheme.value)}
@@ -31,8 +26,9 @@ function useTheme(theme: Theme) {
   const selectedTheme = useSignal<Theme>(getThemeMode(theme, localStorage));
 
   const setTheme = (theme: Theme) => {
+    if (theme === 'system') delete localStorage.theme
+    else localStorage.theme = theme;
     selectedTheme.value = theme;
-    localStorage.theme = theme;
     applyDocumentClass();
   };
 

@@ -6,7 +6,7 @@ export type WithChildren = {
 
 export type Falsy = undefined | false | null;
 
-export type Theme = "dark" | "light";
+export type Theme = "dark" | "light" | "system";
 
 export type WithTheme = {
   theme: Theme;
