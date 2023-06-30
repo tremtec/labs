@@ -15,11 +15,10 @@ export const handler: Handlers<Visits> = {
 
 export default function Home(props: PageProps<Visits>) {
   const { dailyVisits, visits } = props.data;
-  const percentageOfVisitsToday = 100 * dailyVisits / visits;
+  const percentageOfVisitsToday = (100 * dailyVisits / visits).toFixed(2);
   const textVisits = `This page received ${dailyVisits} visits today`;
-  const textVisitsPercentage = `${dailyVisits}/${visits} (${
-    percentageOfVisitsToday.toFixed(2)
-  }% on the total)`;
+  const textPercentage =
+    `${dailyVisits}/${visits} (${percentageOfVisitsToday}% on the total)`;
 
   return (
     <MainLayout>
@@ -33,7 +32,7 @@ export default function Home(props: PageProps<Visits>) {
 
         <div class="text-gray-500 text-xs">
           <p>{textVisits}</p>
-          <p class="text-xs">{textVisitsPercentage}</p>
+          <p class="text-xs">{textPercentage}</p>
         </div>
 
         <form action="/api/auth/github">
