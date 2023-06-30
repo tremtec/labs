@@ -1,10 +1,11 @@
 import { JSX } from "preact";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { useSignal } from "@preact/signals";
+import { signal, useSignal } from "@preact/signals";
 import { Button } from "~/components/Button.tsx";
 import Gear from "~/icon/Gear.tsx";
 import Moon from "~/icon/Moon.tsx";
 import Sun from "~/icon/Sun.tsx";
+import Dots from "~/icon/HDots.tsx";
 
 import { Theme, WithTheme } from "~/shared/types.ts";
 
@@ -13,16 +14,26 @@ export default function ThemeSwitcher({ theme = "system" }: Partial<WithTheme>) 
 
   return (
     <Button
-      onClick={() => toggle(selectedTheme.value)}
-      onContextMenu={() => system()}
       class="border-none rounded-full p-2 active:outline-none focus:outline-none"
+      disabled={!IS_BROWSER}
+      onClick={() => toggle(selectedTheme.value)}
+      onContextMenu={(e) => {
+        e.preventDefault()
+        system()
+      }}
     >
-      {iconTheme(selectedTheme.value)}
+      {IS_BROWSER ? iconTheme(selectedTheme.value) : <Dots />}
     </Button>
   );
 }
 
 function useTheme(theme: Theme) {
+  if (!IS_BROWSER) return {
+    selectedTheme: { value: "system" as Theme },
+    toggle: () => {},
+    system: () => {},
+  }
+
   const selectedTheme = useSignal<Theme>(getThemeMode(theme, localStorage));
 
   const setTheme = (theme: Theme) => {
