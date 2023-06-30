@@ -4,13 +4,10 @@
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
 
-import { start } from "$fresh/server.ts";
-import { applyManifestLayouts } from "$fresh_layout/mod.ts";
+import { Manifest, start } from "$fresh/server.ts";
 import manifest from "#/fresh.gen.ts";
 
 import twindPlugin from "$fresh/plugins/twind.ts";
 import twindConfig from "#/twind.config.ts";
-import { Manifest } from "$fresh_layout/src/deps.ts";
 
-const newManifest = applyManifestLayouts(manifest as Manifest);
-await start(newManifest, { plugins: [twindPlugin(twindConfig)] });
+await start(manifest as Manifest, { plugins: [twindPlugin(twindConfig)] });

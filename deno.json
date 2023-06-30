@@ -11,8 +11,6 @@
     "#/": "./",
     "~/": "./packages/",
     "$fresh/": "https://deno.land/x/fresh@1.2.0/",
-    "$fresh_layout/": "https://deno.land/x/fresh_layout@0.1.0/",
-    "$fresh_session/": "https://deno.land/x/fresh_session@0.2.0/",
     "preact": "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.1.0",
