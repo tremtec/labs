@@ -9,7 +9,9 @@ import Dots from "~/icon/HDots.tsx";
 
 import { Theme, WithTheme } from "~/shared/types.ts";
 
-export default function ThemeSwitcher({ theme = "system" }: Partial<WithTheme>) {
+export default function ThemeSwitcher(
+  { theme = "system" }: Partial<WithTheme>,
+) {
   const { selectedTheme, system, toggle } = useTheme(theme);
 
   return (
@@ -18,8 +20,8 @@ export default function ThemeSwitcher({ theme = "system" }: Partial<WithTheme>) 
       disabled={!IS_BROWSER}
       onClick={() => toggle(selectedTheme.value)}
       onContextMenu={(e) => {
-        e.preventDefault()
-        system()
+        e.preventDefault();
+        system();
       }}
     >
       {IS_BROWSER ? iconTheme(selectedTheme.value) : <Dots />}
@@ -28,16 +30,18 @@ export default function ThemeSwitcher({ theme = "system" }: Partial<WithTheme>) 
 }
 
 function useTheme(theme: Theme) {
-  if (!IS_BROWSER) return {
-    selectedTheme: { value: "system" as Theme },
-    toggle: () => {},
-    system: () => {},
+  if (!IS_BROWSER) {
+    return {
+      selectedTheme: { value: "system" as Theme },
+      toggle: () => {},
+      system: () => {},
+    };
   }
 
   const selectedTheme = useSignal<Theme>(getThemeMode(theme, localStorage));
 
   const setTheme = (theme: Theme) => {
-    if (theme === 'system') delete localStorage.theme
+    if (theme === "system") delete localStorage.theme;
     else localStorage.theme = theme;
     selectedTheme.value = theme;
     applyDocumentClass();
@@ -46,8 +50,8 @@ function useTheme(theme: Theme) {
   const toggle = (theme: Theme) => {
     theme = document.documentElement.classList.contains("dark")
       ? "light"
-      : "dark"
-    return setTheme(theme)
+      : "dark";
+    return setTheme(theme);
   };
 
   const system = () => setTheme("system");
@@ -63,7 +67,7 @@ const themeIconMap: Record<Theme, JSX.Element> = {
   dark: <Sun />,
   light: <Moon />,
   system: <Gear />,
-}
+};
 
 const iconTheme = (theme: Theme) => themeIconMap[theme];
 

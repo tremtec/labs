@@ -6,7 +6,7 @@ export default function MainLayout(props: WithChildren) {
   return (
     <div class="h-screen">
       <Meta />
-      <NavBar/>
+      <NavBar />
       {props.children}
     </div>
   );
