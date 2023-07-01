@@ -1,4 +1,4 @@
-import { setCookie } from "$std/http/cookie.ts";
+import { Cookie, setCookie } from "$std/http/cookie.ts";
 import * as log from "$std/log/mod.ts";
 import { Handler } from "$fresh/server.ts";
 import { AUTH_KEY, client } from "~/services/github.ts";
@@ -18,19 +18,26 @@ export const handler: Handler = async (req, ctx) => {
   // persist session
   const accessToken = await client.getAccessToken(code);
   const redirectUrl = new URL(req.url).origin;
-
-  logger.info({
-    redirectUrl,
-    accessToken,
-  });
-
-  const response = Response.redirect(redirectUrl);
-  setCookie(response.headers, {
+  const cookie: Cookie = {
     name: AUTH_KEY,
     value: accessToken,
     maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
+  }
+
+  logger.info({
+    redirectUrl,
+    accessToken,
+    cookie,
   });
 
-  return response;
+  const response = Response.redirect(redirectUrl);
+  const headers = new Headers(response.headers)
+  setCookie(headers, cookie);
+
+  logger.info({ response });
+  return {
+    ...response,
+    headers,
+  }
 };
