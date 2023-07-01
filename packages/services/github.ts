@@ -84,4 +84,4 @@ export const client = new GitHubClient();
 export const AUTH_KEY = "gh_auth_key";
 
 export const getTokenFromCookies = (req: Request) =>
-  getCookies(req.headers)["sessionId"];
+  getCookies(req.headers)[AUTH_KEY];
