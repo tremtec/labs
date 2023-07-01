@@ -31,7 +31,7 @@ export const handler: Handler = async (req, ctx) => {
     cookie,
   });
 
-  const headers = new Headers({ location: new URL(req.url).origin });
+  const headers = new Headers({ location: new URL(req.url).hostname });
   setCookie(headers, cookie);
 
   return new Response(null, {
