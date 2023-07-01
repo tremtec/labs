@@ -17,12 +17,13 @@ export const handler: Handler = async (req, ctx) => {
 
   // persist session
   const accessToken = await client.getAccessToken(code);
-  const redirectUrl = new URL(req.url).origin;
+  const redirectUrl = url.origin;
   const cookie: Cookie = {
     name: AUTH_KEY,
     value: accessToken,
     maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
+    domain: url.hostname,
   };
 
   logger.info("redirect info", {
@@ -31,7 +32,7 @@ export const handler: Handler = async (req, ctx) => {
     cookie,
   });
 
-  const headers = new Headers({ location: new URL(req.url).hostname });
+  const headers = new Headers({ location: redirectUrl });
   setCookie(headers, cookie);
 
   return new Response(null, {
