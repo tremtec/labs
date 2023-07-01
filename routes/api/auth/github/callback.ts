@@ -32,12 +32,8 @@ export const handler: Handler = async (req, ctx) => {
   });
 
   const response = Response.redirect(redirectUrl);
-  const headers = new Headers(response.headers)
-  setCookie(headers, cookie);
+  setCookie(response.headers, cookie);
 
   logger.info({ response });
-  return {
-    ...response,
-    headers,
-  }
+  return response
 };

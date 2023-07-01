@@ -10,7 +10,7 @@
   "imports": {
     "#/": "./",
     "~/": "./packages/",
-    "$std/": "https://deno.land/std@0.192.0/",
+    "$std/": "https://deno.land/std@0.144.0/",
     "$fresh/": "https://deno.land/x/fresh@1.2.0/",
     "preact": "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/",
