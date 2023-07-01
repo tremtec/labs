@@ -43,7 +43,7 @@ export class GitHubClient {
     const data = await response.json();
     const accessToken = data["access_token"];
 
-    logger.debug({ accessToken });
+    logger.debug({ accessToken, data });
 
     if (typeof accessToken !== "string") {
       console.log({ accessToken });
