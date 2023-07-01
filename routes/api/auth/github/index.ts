@@ -1,12 +1,12 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
-import { GitHubObject } from "~/shared/auth.ts";
-import * as log from "https://deno.land/std@0.191.0/log/mod.ts";
+import * as log from "$std/log/mod.ts";
+import { client } from "~/services/github.ts";
 
 const logger = log.getLogger("auth");
 
 export const handler: Handlers = {
   GET(req: Request, ctx: HandlerContext) {
-    const redirectLink = GitHubObject.code.createLink();
+    const redirectLink = client.createLink();
     logger.info({ req, ctx, redirectLink });
     return Response.redirect(redirectLink);
   },

@@ -1,22 +1,26 @@
+import { setCookie } from "$std/http/cookie.ts";
 import { Handler } from "$fresh/server.ts";
-import { GitHubObject } from "~/shared/auth.ts";
+import { AUTH_KEY, client } from "~/services/github.ts";
+
 
 export const handler: Handler = async (req, ctx) => {
   const url = new URL(req.url);
-  const qs = new URLSearchParams(url.searchParams);
-  const queryParams = Object.fromEntries(qs.entries())
-  const userProfile = await GitHubObject.code.processAuth(url);
+  const code = url.searchParams.get("code");
+  if (!code) {
+    return ctx.render(false);
+  }
 
-  console.log({
-    ctx,
-    queryParams,
-  });
+  // TODO: save to DB
 
-  return Response.json({
-    error: qs.get("error"),
-    error_description: qs.get("error_description"),
-    // WIP: save code & state on cookies
-    code: qs.get("code"),
-    userProfile,
-  });
+  // persist session
+  const accessToken = await client.getAccessToken(code)
+  const response = Response.redirect("/")
+  setCookie(response.headers, {
+    name: AUTH_KEY,
+    value: accessToken,
+    maxAge: 60 * 60 * 24 * 7,
+    httpOnly: true,
+  })
+
+  return response;
 };
