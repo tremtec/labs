@@ -13,7 +13,7 @@ export const handler: Handler = async (req, ctx) => {
   }
 
   // TODO: save User to DB
-  logger.info({ code });
+  logger.debug("code: ", { code });
 
   // persist session
   const accessToken = await client.getAccessToken(code);
@@ -23,16 +23,20 @@ export const handler: Handler = async (req, ctx) => {
     value: accessToken,
     maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
+    domain: url.origin,
   }
 
-  logger.info({
+  logger.info("redirect info", {
     redirectUrl,
     accessToken,
     cookie,
   });
 
-  const authHeader = new Headers();
-  setCookie(authHeader, cookie);
+  const headers = new Headers({ location: new URL(req.url).origin });
+  setCookie(headers, cookie);
 
-  return new Response(`{ ${authHeader}, ${accessToken} }`, { headers: authHeader })
+  return new Response(null, {
+    status: 302,
+    headers,
+  });
 };
