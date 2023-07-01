@@ -24,7 +24,7 @@ export const handler: Handler = async (req, ctx) => {
     maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
     domain: url.origin,
-  }
+  };
 
   logger.info("redirect info", {
     redirectUrl,
