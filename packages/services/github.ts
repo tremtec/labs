@@ -1,18 +1,14 @@
 import { github } from "#/settings.ts";
 import { getCookies } from "$std/http/cookie.ts";
+import { getLogger } from "$std/log/mod.ts";
+
+const logger = getLogger("github-client")
 
 export interface GitHubConfig {
-  /** The client ID provided by the authorization server. */
   clientId: string;
-  /** The client secret provided by the authorization server, if using a confidential client. Best practice to always keep secret in env file. */
   clientSecret: string;
-  /** The URI of the client's redirection endpoint (sometimes also called callback URI). */
   redirect: string;
-  /** The URI of the authorization server's token endpoint. */
   tokenUri: string;
-
-  // Our implementation currently only works with scope set to 'read:user'
-  /** Scopes to request with the authorization request. */
   scope: "read:user";
 }
 
@@ -46,7 +42,11 @@ export class GitHubClient {
     }
     const data = await response.json();
     const accessToken = data["access_token"];
+
+    logger.debug({ accessToken })
+
     if (typeof accessToken !== "string") {
+      console.log({accessToken});
       throw new Error("Access token was not a string.");
     }
     return accessToken;
