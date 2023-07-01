@@ -13,24 +13,24 @@ export const handler: Handler = async (req, ctx) => {
   }
 
   // TODO: save User to DB
-  logger.info({ code })
+  logger.info({ code });
 
   // persist session
-  const accessToken = await client.getAccessToken(code)
+  const accessToken = await client.getAccessToken(code);
   const redirectUrl = new URL(req.url).origin;
 
   logger.info({
     redirectUrl,
     accessToken,
-  })
+  });
 
-  const response = Response.redirect(redirectUrl)
+  const response = Response.redirect(redirectUrl);
   setCookie(response.headers, {
     name: AUTH_KEY,
     value: accessToken,
     maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
-  })
+  });
 
   return response;
 };

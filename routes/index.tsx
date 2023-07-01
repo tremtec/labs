@@ -9,10 +9,10 @@ import { client, getTokenFromCookies } from "~/services/github.ts";
 type Profile = any;
 
 type Data = {
-  visits: Visits,
+  visits: Visits;
   // TODO: fix typing
-  userProfile: null | Profile,
-}
+  userProfile: null | Profile;
+};
 
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
@@ -22,10 +22,10 @@ export const handler: Handlers<Data> = {
     // Get cookie from request header and parse it
     const accessToken = getTokenFromCookies(req);
     if (!accessToken) {
-      return ctx.render({ visits, userProfile: null })
+      return ctx.render({ visits, userProfile: null });
     }
 
-    const userProfile = await client.getUserData(accessToken)
+    const userProfile = await client.getUserData(accessToken);
     return ctx.render({ visits, userProfile });
   },
 };

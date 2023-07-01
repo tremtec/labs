@@ -2,7 +2,7 @@ import { github } from "#/settings.ts";
 import { getCookies } from "$std/http/cookie.ts";
 import { getLogger } from "$std/log/mod.ts";
 
-const logger = getLogger("github-client")
+const logger = getLogger("github-client");
 
 export interface GitHubConfig {
   clientId: string;
@@ -43,10 +43,10 @@ export class GitHubClient {
     const data = await response.json();
     const accessToken = data["access_token"];
 
-    logger.debug({ accessToken })
+    logger.debug({ accessToken });
 
     if (typeof accessToken !== "string") {
-      console.log({accessToken});
+      console.log({ accessToken });
       throw new Error("Access token was not a string.");
     }
     return accessToken;
