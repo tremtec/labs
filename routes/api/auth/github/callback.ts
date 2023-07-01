@@ -32,8 +32,10 @@ export const handler: Handler = async (req, ctx) => {
   });
 
   const response = Response.redirect(redirectUrl);
-  setCookie(response.headers, cookie);
+  const authHeader = new Headers();
+  setCookie(authHeader, cookie);
 
-  logger.info({ response });
-  return response
+  logger.info({ response, authHeader });
+
+  return {...response, headers: authHeader}
 };
