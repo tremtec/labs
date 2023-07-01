@@ -12,7 +12,8 @@ export const handler: Handler = async (req, ctx) => {
     return ctx.render(false);
   }
 
-  // TODO: save to DB
+  // TODO: save User to DB
+  logger.info({ code })
 
   // persist session
   const accessToken = await client.getAccessToken(code)
