@@ -1,8 +1,6 @@
-import * as log from "$std/log/mod.ts";
 import { Handler } from "$fresh/server.ts";
+import { logger } from "~/shared/logging.ts";
 import { client, setAuthCookie } from "~/services/github.ts";
-
-const logger = log.getLogger();
 
 export const handler: Handler = async (req, ctx) => {
   const url = new URL(req.url);

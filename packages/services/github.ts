@@ -1,13 +1,11 @@
 import { github } from "#/settings.ts";
+import { logger } from "~/shared/logging.ts";
 import {
   Cookie,
   deleteCookie,
   getCookies,
   setCookie,
 } from "$std/http/cookie.ts";
-import { getLogger } from "$std/log/mod.ts";
-
-const logger = getLogger("github-client");
 
 export interface GitHubConfig {
   clientId: string;
