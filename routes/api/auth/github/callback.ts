@@ -23,7 +23,10 @@ export const handler: Handler = async (req, ctx) => {
     value: accessToken,
     maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
-    path: "/"
+    sameSite: "Lax", // this is important to prevent CSRF attacks
+    domain: url.hostname,
+    path: "/",
+    secure: true,
   };
 
   logger.info("redirect info", {
