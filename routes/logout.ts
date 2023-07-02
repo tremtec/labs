@@ -16,3 +16,5 @@ export const handler: Handlers = {
     });
   },
 };
+
+export default function Page() {}
