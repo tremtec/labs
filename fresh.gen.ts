@@ -6,8 +6,9 @@ import * as $0 from "./routes/_app.tsx";
 import * as $1 from "./routes/api/auth/github/callback.ts";
 import * as $2 from "./routes/api/auth/github/index.ts";
 import * as $3 from "./routes/api/auth/github/webhook.ts";
-import * as $4 from "./routes/api/index.ts";
-import * as $5 from "./routes/index.tsx";
+import * as $4 from "./routes/api/auth/logout.ts";
+import * as $5 from "./routes/api/index.ts";
+import * as $6 from "./routes/index.tsx";
 import * as $$0 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
@@ -16,8 +17,9 @@ const manifest = {
     "./routes/api/auth/github/callback.ts": $1,
     "./routes/api/auth/github/index.ts": $2,
     "./routes/api/auth/github/webhook.ts": $3,
-    "./routes/api/index.ts": $4,
-    "./routes/index.tsx": $5,
+    "./routes/api/auth/logout.ts": $4,
+    "./routes/api/index.ts": $5,
+    "./routes/index.tsx": $6,
   },
   islands: {
     "./islands/ThemeSwitcher.tsx": $$0,
