@@ -13,7 +13,7 @@ export const handler: Handler = async (req, ctx) => {
   }
 
   // TODO: save User to DB
-  logger.debug("code: ", { code });
+  logger.info("code: ", { code });
 
   // persist session
   const accessToken = await client.getAccessToken(code);
