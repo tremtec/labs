@@ -46,7 +46,11 @@ export default function Home(props: PageProps<Data>) {
           {site.name}
         </h1>
 
-        <h2>{site.subTitle}</h2>
+        <h2>
+          {!userProfile
+            ? site.subTitle
+            : `Welcome ${userProfile.name} (@${userProfile.username})! 🎉`}
+        </h2>
 
         <div class="text-gray-500 text-xs">
           <p>{textVisits}</p>
@@ -60,12 +64,9 @@ export default function Home(props: PageProps<Data>) {
             </form>
           )
           : (
-            <>
-              <p>Welcome {userProfile.name} (@{userProfile.username})! 🎉</p>
-              <form action="/api/auth/github/logout">
-                <button title="logout">Logout</button>
-              </form>
-            </>
+            <form action="/api/auth/github/logout">
+              <button title="logout">Logout</button>
+            </form>
           )}
       </div>
     </MainLayout>
