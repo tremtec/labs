@@ -62,7 +62,7 @@ export default function Home(props: PageProps<Data>) {
           : (
             <>
               <p>Welcome ${userProfile.name}! 🎉</p>
-              <form action="/api/auth/logout">
+              <form action="/logout">
                 <button title="logout">Logout</button>
               </form>
             </>
