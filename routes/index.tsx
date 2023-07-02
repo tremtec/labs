@@ -5,6 +5,7 @@ import { site } from "#/settings.ts";
 import { addVisit, getVisits, Visits } from "~/shared/db.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { client, getTokenFromCookies } from "~/services/github.ts";
+import { getLogger } from "$std/log/mod.ts";
 
 type Profile = any;
 
@@ -13,6 +14,8 @@ type Data = {
   // TODO: fix typing
   userProfile: null | Profile;
 };
+
+const logger = getLogger("root")
 
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
@@ -26,6 +29,7 @@ export const handler: Handlers<Data> = {
     }
 
     const userProfile = await client.getUserData(accessToken);
+    logger.debug({ userProfile, visits })
     return ctx.render({ visits, userProfile });
   },
 };
