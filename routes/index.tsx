@@ -61,7 +61,7 @@ export default function Home(props: PageProps<Data>) {
           )
           : (
             <>
-              <p>Welcome ${userProfile.name}! 🎉</p>
+              <p>Welcome {userProfile.name} (@{userProfile.username})! 🎉</p>
               <form action="/logout">
                 <button title="logout">Logout</button>
               </form>
