@@ -64,7 +64,7 @@ export default function Home(props: PageProps<Data>) {
             </form>
           )
           : (
-            <form action="/api/auth/github/logout">
+            <form action="/api/auth/logout">
               <button title="logout">Logout</button>
             </form>
           )}
