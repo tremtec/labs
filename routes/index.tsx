@@ -5,9 +5,7 @@ import { site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
 import { addVisit, getVisits, Visits } from "~/shared/db.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { client, getTokenFromCookies } from "~/services/github.ts";
-
-type Profile = any;
+import { client, getTokenFromCookies, Profile } from "~/services/github.ts";
 
 type Data = {
   visits: Visits;

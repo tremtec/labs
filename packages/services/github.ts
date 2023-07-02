@@ -15,6 +15,13 @@ export interface GitHubConfig {
   scope: "read:user";
 }
 
+export type Profile = {
+  id: number;
+  name: string;
+  username: string;
+  avatarUrl: string;
+};
+
 const config: GitHubConfig = {
   clientId: github.clientId,
   clientSecret: github.clientSecret,
@@ -55,7 +62,7 @@ export class GitHubClient {
     return accessToken;
   }
 
-  async getUserData(accessToken: string) {
+  async getUserData(accessToken: string): Promise<Profile> {
     const response = await fetch("https://api.github.com/user", {
       headers: {
         Authorization: `token ${accessToken}`,
@@ -64,10 +71,14 @@ export class GitHubClient {
     if (!response.ok) {
       throw new Error(await response.text());
     }
+
     const userData = await response.json();
+    logger.debug({ userData });
+
     return {
-      userId: userData.id as number,
-      userName: userData.login as string,
+      id: userData.id as number,
+      name: userData.name ?? userData.login as string,
+      username: userData.login as string,
       avatarUrl: userData["avatar_url"] as string,
     };
   }

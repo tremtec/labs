@@ -9,7 +9,7 @@ log.setup({
     default: {
       level: "DEBUG",
       handlers: ["console"],
-    }
+    },
   },
 });
 
