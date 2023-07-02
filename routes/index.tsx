@@ -62,7 +62,7 @@ export default function Home(props: PageProps<Data>) {
           : (
             <>
               <p>Welcome {userProfile.name} (@{userProfile.username})! 🎉</p>
-              <form action="/logout">
+              <form action="/api/auth/github/logout">
                 <button title="logout">Logout</button>
               </form>
             </>
