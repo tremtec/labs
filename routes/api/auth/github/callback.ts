@@ -10,17 +10,14 @@ export const handler: Handler = async (req, ctx) => {
   }
 
   // TODO: save User to DB
-  logger.info("code: ", { code });
+  logger.info({ code });
 
   // persist session
   const accessToken = await client.getAccessToken(code);
   const redirectUrl = url.origin;
   const headers = setAuthCookie(req, accessToken);
 
-  logger.info("redirect info", {
-    redirectUrl,
-    accessToken,
-  });
+  logger.info({ redirectUrl, accessToken });
 
   return new Response(null, {
     status: 302,

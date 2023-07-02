@@ -27,7 +27,7 @@ export const handler: Handlers<Data> = {
     }
 
     const userProfile = await client.getUserData(accessToken);
-    logger.debug({ userProfile, visits })
+    logger.debug({ userProfile, visits });
     return ctx.render({ visits, userProfile });
   },
 };
