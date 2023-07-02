@@ -2,7 +2,7 @@ import { HandlerContext, Handlers } from "$fresh/server.ts";
 import * as log from "$std/log/mod.ts";
 import { client } from "~/services/github.ts";
 
-const logger = log.getLogger("auth");
+const logger = log.getLogger();
 
 export const handler: Handlers = {
   GET(req: Request, ctx: HandlerContext) {
