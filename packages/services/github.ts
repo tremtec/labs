@@ -53,7 +53,7 @@ export class GitHubClient {
     const data = await response.json();
     const accessToken = data["access_token"];
 
-    logger.info({ accessToken, data });
+    logger.debug({ accessToken, data });
 
     if (typeof accessToken !== "string") {
       console.log({ accessToken });
@@ -101,8 +101,6 @@ export const getTokenFromCookies = (req: Request) =>
   getCookies(req.headers)[AUTH_KEY];
 
 export const setAuthCookie = (req: Request, accessToken: string) => {
-  logger.debug("set auth");
-
   const url = new URL(req.url);
   const cookie: Cookie = {
     name: AUTH_KEY,
@@ -122,8 +120,6 @@ export const setAuthCookie = (req: Request, accessToken: string) => {
 };
 
 export const deleteAuth = (req: Request) => {
-  logger.debug("logging out");
-
   const url = new URL(req.url);
   const headers = new Headers(req.headers);
   deleteCookie(headers, AUTH_KEY, { path: "/", domain: url.hostname });

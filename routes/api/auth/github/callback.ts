@@ -14,10 +14,7 @@ export const handler: Handler = async (req, ctx) => {
 
   // persist session
   const accessToken = await client.getAccessToken(code);
-  const redirectUrl = url.origin;
   const headers = setAuthCookie(req, accessToken);
-
-  logger.info({ redirectUrl, accessToken });
 
   return new Response(null, {
     status: 302,

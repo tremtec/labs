@@ -10,7 +10,7 @@ export const handler: Handlers = {
   },
 
   POST(req: Request, ctx: HandlerContext) {
-    console.log({ req, ctx });
+    logger.info({ req, ctx });
     return new Response("Hello form github callback");
   },
 };

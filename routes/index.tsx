@@ -24,6 +24,7 @@ export const handler: Handlers<Data> = {
       return ctx.render({ visits, userProfile: null });
     }
 
+    // TODO: refresh auth token
     const userProfile = await client.getUserData(accessToken);
     logger.debug({ userProfile, visits });
     return ctx.render({ visits, userProfile });
