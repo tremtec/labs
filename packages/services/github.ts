@@ -1,5 +1,10 @@
 import { github } from "#/settings.ts";
-import { getCookies } from "$std/http/cookie.ts";
+import {
+  Cookie,
+  deleteCookie,
+  getCookies,
+  setCookie,
+} from "$std/http/cookie.ts";
 import { getLogger } from "$std/log/mod.ts";
 
 const logger = getLogger("github-client");
@@ -85,3 +90,34 @@ export const AUTH_KEY = "gh_auth_key";
 
 export const getTokenFromCookies = (req: Request) =>
   getCookies(req.headers)[AUTH_KEY];
+
+export const setAuthCookie = (req: Request, accessToken: string) => {
+  logger.debug("set auth");
+
+  const url = new URL(req.url);
+  const cookie: Cookie = {
+    name: AUTH_KEY,
+    value: accessToken,
+    maxAge: 60 * 60 * 24 * 7,
+    httpOnly: true,
+    sameSite: "Lax", // this is important to prevent CSRF attacks
+    domain: url.hostname,
+    path: "/",
+    secure: true,
+  };
+
+  const headers = new Headers({ location: url.origin });
+  setCookie(headers, cookie);
+
+  return headers;
+};
+
+export const deleteAuth = (req: Request) => {
+  logger.debug("logging out");
+
+  const url = new URL(req.url);
+  const headers = new Headers(req.headers);
+  deleteCookie(headers, AUTH_KEY, { path: "/", domain: url.hostname });
+
+  return headers;
+};

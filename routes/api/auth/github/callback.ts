@@ -1,7 +1,6 @@
-import { Cookie, setCookie } from "$std/http/cookie.ts";
 import * as log from "$std/log/mod.ts";
 import { Handler } from "$fresh/server.ts";
-import { AUTH_KEY, client } from "~/services/github.ts";
+import { client, setAuthCookie } from "~/services/github.ts";
 
 const logger = log.getLogger("auth");
 
@@ -18,25 +17,12 @@ export const handler: Handler = async (req, ctx) => {
   // persist session
   const accessToken = await client.getAccessToken(code);
   const redirectUrl = url.origin;
-  const cookie: Cookie = {
-    name: AUTH_KEY,
-    value: accessToken,
-    maxAge: 60 * 60 * 24 * 7,
-    httpOnly: true,
-    sameSite: "Lax", // this is important to prevent CSRF attacks
-    domain: url.hostname,
-    path: "/",
-    secure: true,
-  };
+  const headers = setAuthCookie(req, accessToken);
 
   logger.info("redirect info", {
     redirectUrl,
     accessToken,
-    cookie,
   });
-
-  const headers = new Headers({ location: redirectUrl });
-  setCookie(headers, cookie);
 
   return new Response(null, {
     status: 302,
