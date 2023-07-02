@@ -47,9 +47,7 @@ export default function Home(props: PageProps<Data>) {
         </h1>
 
         <h2>
-          {!userProfile
-            ? site.subTitle
-            : `Welcome ${userProfile.name} (@${userProfile.username})! 🎉`}
+          {!userProfile ? site.subTitle : `Welcome @${userProfile.username} 🎉`}
         </h2>
 
         <div class="text-gray-500 text-xs">
