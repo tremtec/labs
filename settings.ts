@@ -13,7 +13,6 @@ export const site = {
 const VarEnvSchema = z.object({
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
-  GITHUB_REDIRECT: z.string(),
 });
 
 // validate if var envs are processed
