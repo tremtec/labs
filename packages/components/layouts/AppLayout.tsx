@@ -1,7 +1,6 @@
 import { github } from "#/settings.ts";
 import { WithChildren } from "~/shared/types.ts";
 import MainLayout from "~/components/layouts/MainLayout.tsx";
-import { cls } from "~/shared/tw.tsx";
 
 export default function AppLayout(props: WithChildren) {
   return (

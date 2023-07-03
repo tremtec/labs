@@ -1,7 +1,7 @@
 import TremTecLogo from "~/icon/TremTecLogo.tsx";
 import MainLayout from "~/components/layouts/MainLayout.tsx";
 
-import { site } from "#/settings.ts";
+import { github, site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
 import { addVisit, getVisits, Visits } from "~/shared/db.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
@@ -49,7 +49,7 @@ export default function Home(props: PageProps<Data>) {
           <p class="text-xs">{textPercentage}</p>
         </div>
 
-        <form action="/api/auth/github">
+        <form action={github.signInUrl}>
           <button title="login via github">Github</button>
         </form>
       </div>

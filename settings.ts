@@ -23,6 +23,7 @@ export const github = {
   clientSecret: env.GITHUB_CLIENT_SECRET,
   callbackUrl: "/api/auth/github/callback",
   logoutUrl: "/api/auth/logout",
+  signInUrl: "/api/auth/github",
   cookieAuthKey: "GH_AUTH_KEY",
   tokenUri: "https://github.com/login/oauth/access_token",
   scope: "read:user" as const,

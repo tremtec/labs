@@ -9,6 +9,34 @@ import {
 import { UserProfile } from "#/entities/userProfile.ts";
 
 export class GitHubClient {
+  cookieAccessToken(req: Request): string | null {
+    // Get cookie from request header and parse it
+    const value = getCookies(req.headers)[github.cookieAuthKey] ?? "";
+    if (value.trim() === "") return null;
+    return value;
+  }
+
+  createLink(req: Request) {
+    const url = new URL(req.url);
+    const state: number = Math.floor(Math.random() * 1000000000);
+    const encodeLink: string = encodeURIComponent(
+      url.origin + github.callbackUrl,
+    );
+    const encodeScope: string = encodeURIComponent(github.scope);
+    const SampleLink =
+      `https://github.com/login/oauth/authorize?response_type=code&client_id=${github.clientId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`;
+    return SampleLink;
+  }
+
+  async getAuthenticatedUser(req: Request): Promise<UserProfile | null> {
+    // Get cookie from request header and parse it
+    const accessToken = this.cookieAccessToken(req);
+    if (!accessToken) return null;
+
+    // TODO: refresh auth token
+    return await client.getUserData(accessToken);
+  }
+
   async getAccessToken(code: string) {
     const response = await fetch(
       "https://github.com/login/oauth/access_token",
@@ -40,22 +68,6 @@ export class GitHubClient {
     return accessToken;
   }
 
-  async getAuthenticatedUser(req: Request): Promise<UserProfile | null> {
-    // Get cookie from request header and parse it
-    const accessToken = this.cookieAccessToken(req);
-    if (!accessToken) return null;
-
-    // TODO: refresh auth token
-    return await client.getUserData(accessToken);
-  }
-
-  cookieAccessToken(req: Request): string | null {
-    // Get cookie from request header and parse it
-    const value = getCookies(req.headers)[github.cookieAuthKey] ?? "";
-    if (value.trim() === "") return null;
-    return value;
-  }
-
   private async getUserData(accessToken: string): Promise<UserProfile> {
     const response = await fetch("https://api.github.com/user", {
       headers: {
@@ -75,18 +87,6 @@ export class GitHubClient {
       username: userData.login as string,
       avatarUrl: userData["avatar_url"] as string,
     };
-  }
-
-  createLink(req: Request) {
-    const url = new URL(req.url);
-    const state: number = Math.floor(Math.random() * 1000000000);
-    const encodeLink: string = encodeURIComponent(
-      url.origin + github.callbackUrl,
-    );
-    const encodeScope: string = encodeURIComponent(github.scope);
-    const SampleLink =
-      `https://github.com/login/oauth/authorize?response_type=code&client_id=${github.clientId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`;
-    return SampleLink;
   }
 }
 
