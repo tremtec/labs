@@ -10,7 +10,9 @@ import * as $4 from "./routes/api/auth/logout.ts";
 import * as $5 from "./routes/api/index.ts";
 import * as $6 from "./routes/app/_middleware.ts";
 import * as $7 from "./routes/app/index.tsx";
-import * as $8 from "./routes/index.tsx";
+import * as $8 from "./routes/app/interviews.tsx";
+import * as $9 from "./routes/app/profile.tsx";
+import * as $10 from "./routes/index.tsx";
 import * as $$0 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
@@ -23,7 +25,9 @@ const manifest = {
     "./routes/api/index.ts": $5,
     "./routes/app/_middleware.ts": $6,
     "./routes/app/index.tsx": $7,
-    "./routes/index.tsx": $8,
+    "./routes/app/interviews.tsx": $8,
+    "./routes/app/profile.tsx": $9,
+    "./routes/index.tsx": $10,
   },
   islands: {
     "./islands/ThemeSwitcher.tsx": $$0,

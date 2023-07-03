@@ -17,22 +17,27 @@ export const handler: Handlers<Data> = {
   },
 };
 
-export default function Home(props: PageProps<Data>) {
+export default function Profile(props: PageProps<Data>) {
   const { userProfile } = props.data;
   return (
-    <AppLayout path={props.url.pathname ?? "/"}>
-      <div class="p-4 mx-auto max-w-screen-md text-center flex flex-col gap-8 items-center">
+    <AppLayout path={props.url.pathname}>
+      <div class="grid gap-8 text-left grid-cols-3">
         <img
           width={240}
           height={240}
-          class="rounded-full animate-bounce hover:animate-ping"
+          class="rounded-full"
           alt={`Welcome ${userProfile.name} 🎉`}
           src={userProfile.avatarUrl}
         />
 
-        <h1 class="text-2xl">
-          Welcome @{userProfile.username} 🎉
-        </h1>
+        <div class="col-span-2 flex flex-col gap-2">
+          <h1 class="text-3xl">
+            Welcome {userProfile.name} 🎉
+          </h1>
+          <h2 class="text-gray-600">
+            @{userProfile.username}
+          </h2>
+        </div>
       </div>
     </AppLayout>
   );

@@ -10,6 +10,18 @@ export const site = {
   repository: "https://github.com/tremtec/labs",
 };
 
+export type NavLink = {
+  name: string;
+  link: string;
+  alt?: string;
+};
+
+export const privateNavLinks: NavLink[] = [
+  { link: "/app", name: "Dashboard" },
+  { link: "/app/interviews", name: "Interviews" },
+  { link: "/app/profile", name: "Profile" },
+];
+
 const VarEnvSchema = z.object({
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),

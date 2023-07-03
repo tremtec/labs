@@ -279,5 +279,16 @@
     "https://esm.sh/v126/style-vendorizer@2.2.3/denonext/style-vendorizer.mjs": "121455e7b04b631ef6463ce63cdcd29febd74d88c37713c774ceca8a1561c83d",
     "https://esm.sh/v126/twind@0.16.19/denonext/sheets.js": "efd516ad31769dc75c995bfb984ab03d23c0e0a90240c83a5496ef150cfd4757",
     "https://esm.sh/v126/twind@0.16.19/denonext/twind.mjs": "6ee3c0c14b6740064f7dcd6aae4d40be42bf95adaf38f3b1cda09302c6d163b7"
+  },
+  "npm": {
+    "specifiers": {
+      "@types/node": "@types/node@18.11.18"
+    },
+    "packages": {
+      "@types/node@18.11.18": {
+        "integrity": "sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==",
+        "dependencies": {}
+      }
+    }
   }
 }
