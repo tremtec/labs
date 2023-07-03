@@ -1,11 +1,9 @@
-import TremTecLogo from "~/icon/TremTecLogo.tsx";
 import MainLayout from "~/components/layouts/MainLayout.tsx";
 
-import { site } from "#/settings.ts";
-import { logger } from "~/shared/logging.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { client } from "~/services/github.ts";
 import { UserProfile } from "#/entities/userProfile.ts";
+import { github } from "#/settings.ts";
 
 type Data = {
   userProfile: UserProfile;
@@ -14,7 +12,7 @@ type Data = {
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
     const userProfile = await client.getAuthenticatedUser(req);
-    if (!userProfile) return Response.redirect("/logout");
+    if (!userProfile) throw Error("User profile not found!");
     return ctx.render({ userProfile });
   },
 };
@@ -36,7 +34,7 @@ export default function Home(props: PageProps<Data>) {
           Welcome @{userProfile.username} 🎉
         </h1>
 
-        <form action="/api/auth/logout">
+        <form action={github.logoutUrl}>
           <button title="logout">Logout</button>
         </form>
       </div>
