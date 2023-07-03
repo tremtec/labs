@@ -12,6 +12,7 @@
     "~/": "./packages/",
     "$std/": "https://deno.land/std@0.192.0/",
     "$fresh/": "https://deno.land/x/fresh@1.2.0/",
+    "zod": "https://deno.land/x/zod@v3.21.4/mod.ts",
     "preact": "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.1.0",

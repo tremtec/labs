@@ -1,3 +1,4 @@
+import { z } from "zod";
 import "dotenv";
 
 export const site = {
@@ -9,7 +10,15 @@ export const site = {
   repository: "https://github.com/tremtec/labs",
 };
 
+const VarEnvSchema = z.object({
+  GITHUB_CLIENT_ID: z.string(),
+  GITHUB_CLIENT_SECRET: z.string(),
+})
+
+// validate if var envs are processed
+const env = VarEnvSchema.parse(Deno.env.toObject());
+
 export const github = {
-  clientId: Deno.env.get("GITHUB_CLIENT_ID") ?? "",
-  clientSecret: Deno.env.get("GITHUB_CLIENT_SECRET") ?? "",
+  clientId: env.GITHUB_CLIENT_ID,
+  clientSecret: env.GITHUB_CLIENT_SECRET,
 };
