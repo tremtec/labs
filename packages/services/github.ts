@@ -86,6 +86,7 @@ export class GitHubClient {
       name: userData.name ?? userData.login as string,
       username: userData.login as string,
       avatarUrl: userData["avatar_url"] as string,
+      bio: userData["bio"] as string,
     };
   }
 }
