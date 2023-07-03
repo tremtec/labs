@@ -19,18 +19,11 @@ const VarEnvSchema = z.object({
 // validate if var envs are processed
 const env = VarEnvSchema.parse(Deno.env.toObject());
 
-export interface GitHubConfig {
-  clientId: string;
-  clientSecret: string;
-  redirect: string;
-  tokenUri: string;
-  scope: "read:user";
-}
-
-export const github: GitHubConfig = {
+export const github = {
   clientId: env.GITHUB_CLIENT_ID,
   clientSecret: env.GITHUB_CLIENT_SECRET,
   redirect: env.GITHUB_REDIRECT,
+  cookieAuthKey: "GH_AUTH_KEY",
   tokenUri: "https://github.com/login/oauth/access_token",
-  scope: "read:user",
+  scope: "read:user" as const,
 };

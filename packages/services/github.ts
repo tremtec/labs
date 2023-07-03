@@ -42,13 +42,18 @@ export class GitHubClient {
 
   async getAuthenticatedUser(req: Request): Promise<UserProfile | null> {
     // Get cookie from request header and parse it
-    const accessToken = getTokenFromCookies(req);
-    if (!accessToken) {
-      return null;
-    }
+    const accessToken = this.cookieAccessToken(req);
+    if (!accessToken) return null;
 
     // TODO: refresh auth token
     return await client.getUserData(accessToken);
+  }
+
+  cookieAccessToken(req: Request): string | null {
+    // Get cookie from request header and parse it
+    const value = getCookies(req.headers)[github.cookieAuthKey] ?? "";
+    if (value.trim() === "") return null;
+    return value;
   }
 
   private async getUserData(accessToken: string): Promise<UserProfile> {
@@ -84,15 +89,10 @@ export class GitHubClient {
 
 export const client = new GitHubClient();
 
-export const AUTH_KEY = "gh_auth_key";
-
-export const getTokenFromCookies = (req: Request) =>
-  getCookies(req.headers)[AUTH_KEY];
-
 export const setAuthCookie = (req: Request, accessToken: string) => {
   const url = new URL(req.url);
   const cookie: Cookie = {
-    name: AUTH_KEY,
+    name: github.cookieAuthKey,
     value: accessToken,
     maxAge: 60 * 60 * 24 * 7,
     httpOnly: true,
@@ -111,7 +111,11 @@ export const setAuthCookie = (req: Request, accessToken: string) => {
 export const deleteAuth = (req: Request) => {
   const url = new URL(req.url);
   const headers = new Headers(req.headers);
-  deleteCookie(headers, AUTH_KEY, { path: "/", domain: url.hostname });
+
+  deleteCookie(headers, github.cookieAuthKey, {
+    path: "/",
+    domain: url.hostname,
+  });
 
   return headers;
 };
