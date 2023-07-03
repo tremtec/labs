@@ -13,12 +13,24 @@ export const site = {
 const VarEnvSchema = z.object({
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
-})
+  GITHUB_REDIRECT: z.string(),
+});
 
 // validate if var envs are processed
 const env = VarEnvSchema.parse(Deno.env.toObject());
 
-export const github = {
+export interface GitHubConfig {
+  clientId: string;
+  clientSecret: string;
+  redirect: string;
+  tokenUri: string;
+  scope: "read:user";
+}
+
+export const github: GitHubConfig = {
   clientId: env.GITHUB_CLIENT_ID,
   clientSecret: env.GITHUB_CLIENT_SECRET,
+  redirect: env.GITHUB_REDIRECT,
+  tokenUri: "https://github.com/login/oauth/access_token",
+  scope: "read:user",
 };

@@ -7,27 +7,11 @@ import {
   setCookie,
 } from "$std/http/cookie.ts";
 
-export interface GitHubConfig {
-  clientId: string;
-  clientSecret: string;
-  redirect: string;
-  tokenUri: string;
-  scope: "read:user";
-}
-
 export type Profile = {
   id: number;
   name: string;
   username: string;
   avatarUrl: string;
-};
-
-const config: GitHubConfig = {
-  clientId: github.clientId,
-  clientSecret: github.clientSecret,
-  tokenUri: "https://github.com/login/oauth/access_token",
-  redirect: "https://tremtec.deno.dev/api/auth/github/callback", // The redirect uri is added in the GitHub OAuth developer settings
-  scope: "read:user",
 };
 
 export class GitHubClient {
@@ -37,8 +21,8 @@ export class GitHubClient {
       {
         method: "POST",
         body: JSON.stringify({
-          client_id: config.clientId,
-          client_secret: config.clientSecret,
+          client_id: github.clientId,
+          client_secret: github.clientSecret,
           code,
         }),
         headers: {
@@ -85,10 +69,10 @@ export class GitHubClient {
 
   createLink() {
     const state: number = Math.floor(Math.random() * 1000000000);
-    const encodeLink: string = encodeURIComponent(config.redirect);
-    const encodeScope: string = encodeURIComponent(config.scope);
+    const encodeLink: string = encodeURIComponent(github.redirect);
+    const encodeScope: string = encodeURIComponent(github.scope);
     const SampleLink =
-      `https://github.com/login/oauth/authorize?response_type=code&client_id=${config.clientId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`;
+      `https://github.com/login/oauth/authorize?response_type=code&client_id=${github.clientId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`;
     return SampleLink;
   }
 }
