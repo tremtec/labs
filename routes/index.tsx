@@ -5,28 +5,22 @@ import { site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
 import { addVisit, getVisits, Visits } from "~/shared/db.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { client, getTokenFromCookies, Profile } from "~/services/github.ts";
+import { client } from "~/services/github.ts";
+import { UserProfile } from "#/entities/userProfile.ts";
 
 type Data = {
   visits: Visits;
-  // TODO: fix typing
-  userProfile: null | Profile;
+  userProfile: UserProfile | null;
 };
 
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
     await addVisit();
     const visits = await getVisits();
+    const userProfile = await client.getAuthenticatedUser(req);
 
-    // Get cookie from request header and parse it
-    const accessToken = getTokenFromCookies(req);
-    if (!accessToken) {
-      return ctx.render({ visits, userProfile: null });
-    }
-
-    // TODO: refresh auth token
-    const userProfile = await client.getUserData(accessToken);
     logger.debug({ userProfile, visits });
+
     return ctx.render({ visits, userProfile });
   },
 };

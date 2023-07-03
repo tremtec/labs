@@ -6,13 +6,7 @@ import {
   getCookies,
   setCookie,
 } from "$std/http/cookie.ts";
-
-export type Profile = {
-  id: number;
-  name: string;
-  username: string;
-  avatarUrl: string;
-};
+import { UserProfile } from "#/entities/userProfile.ts";
 
 export class GitHubClient {
   async getAccessToken(code: string) {
@@ -46,7 +40,18 @@ export class GitHubClient {
     return accessToken;
   }
 
-  async getUserData(accessToken: string): Promise<Profile> {
+  async getAuthenticatedUser(req: Request): Promise<UserProfile | null> {
+    // Get cookie from request header and parse it
+    const accessToken = getTokenFromCookies(req);
+    if (!accessToken) {
+      return null;
+    }
+
+    // TODO: refresh auth token
+    return await client.getUserData(accessToken);
+  }
+
+  private async getUserData(accessToken: string): Promise<UserProfile> {
     const response = await fetch("https://api.github.com/user", {
       headers: {
         Authorization: `token ${accessToken}`,

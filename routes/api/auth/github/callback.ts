@@ -16,6 +16,9 @@ export const handler: Handler = async (req, ctx) => {
   const accessToken = await client.getAccessToken(code);
   const headers = setAuthCookie(req, accessToken);
 
+  // redirect to app
+  headers.set("location", `${url.origin}/app`);
+
   return new Response(null, {
     status: 302,
     headers,
