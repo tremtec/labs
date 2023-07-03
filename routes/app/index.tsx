@@ -1,4 +1,4 @@
-import MainLayout from "~/components/layouts/MainLayout.tsx";
+import AppLayout from "~/components/layouts/AppLayout.tsx";
 
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { client } from "~/services/github.ts";
@@ -20,7 +20,7 @@ export const handler: Handlers<Data> = {
 export default function Home(props: PageProps<Data>) {
   const { userProfile } = props.data;
   return (
-    <MainLayout>
+    <AppLayout>
       <div class="p-4 mx-auto max-w-screen-md text-center flex flex-col gap-8 items-center">
         <img
           width={240}
@@ -33,11 +33,7 @@ export default function Home(props: PageProps<Data>) {
         <h1 class="text-2xl">
           Welcome @{userProfile.username} 🎉
         </h1>
-
-        <form action={github.logoutUrl}>
-          <button title="logout">Logout</button>
-        </form>
       </div>
-    </MainLayout>
+    </AppLayout>
   );
 }

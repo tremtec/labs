@@ -7,7 +7,9 @@ export default function MainLayout(props: WithChildren) {
     <div class="h-screen">
       <Meta />
       <NavBar />
-      {props.children}
+      <div class="p-4 mx-auto max-w-screen-md text-center flex flex-col gap-8 items-center">
+        {props.children}
+      </div>
     </div>
   );
 }

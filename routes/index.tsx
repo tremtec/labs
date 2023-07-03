@@ -36,7 +36,7 @@ export default function Home(props: PageProps<Data>) {
 
   return (
     <MainLayout>
-      <div class="p-4 mx-auto max-w-screen-md text-center flex flex-col gap-8 items-center">
+      <div class="text-center flex flex-col gap-8 items-center">
         <h1 class="text-2xl">
           <TremTecLogo size={240} class="animate-bounce hover:animate-ping" />
           {site.name}
