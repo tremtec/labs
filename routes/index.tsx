@@ -13,8 +13,9 @@ type Data = {
 
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
+    const url = new URL(req.url);
     if (client.cookieAccessToken(req)) {
-      return Response.redirect("/app");
+      return Response.redirect(url.origin + "/app");
     }
 
     await addVisit();

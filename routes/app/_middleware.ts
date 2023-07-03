@@ -6,7 +6,9 @@ export async function handler(
   req: Request,
   ctx: MiddlewareHandlerContext,
 ) {
-  return client.cookieAccessToken(req)
-    ? await ctx.next()
-    : Response.redirect(github.logoutUrl);
+  const url = new URL(req.url);
+  if (!client.cookieAccessToken(req)) {
+    return Response.redirect(url.origin + github.logoutUrl);
+  }
+  return await ctx.next();
 }

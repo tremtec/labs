@@ -77,9 +77,12 @@ export class GitHubClient {
     };
   }
 
-  createLink() {
+  createLink(req: Request) {
+    const url = new URL(req.url);
     const state: number = Math.floor(Math.random() * 1000000000);
-    const encodeLink: string = encodeURIComponent(github.redirect);
+    const encodeLink: string = encodeURIComponent(
+      url.origin + github.callbackUrl,
+    );
     const encodeScope: string = encodeURIComponent(github.scope);
     const SampleLink =
       `https://github.com/login/oauth/authorize?response_type=code&client_id=${github.clientId}&redirect_uri=${encodeLink}&state=${state}&scope=${encodeScope}`;

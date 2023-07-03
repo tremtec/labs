@@ -4,7 +4,7 @@ import { client } from "~/services/github.ts";
 
 export const handler: Handlers = {
   GET(req: Request, ctx: HandlerContext) {
-    const redirectLink = client.createLink();
+    const redirectLink = client.createLink(req);
     logger.info({ req, ctx, redirectLink });
     return Response.redirect(redirectLink);
   },
