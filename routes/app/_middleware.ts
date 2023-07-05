@@ -1,14 +1,21 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
-import { client } from "~/services/github.ts";
 import { github } from "#/settings.ts";
+import { client, cookies } from "~/services/github.ts";
 
 export async function handler(
   req: Request,
   ctx: MiddlewareHandlerContext,
 ) {
   const url = new URL(req.url);
-  if (!client.cookieAccessToken(req)) {
+  const authToken = cookies.getAuthToken(req);
+  if (!authToken) {
     return Response.redirect(url.origin + github.logoutUrl);
   }
-  return await ctx.next();
+
+  const tokenExpired = await client.isTokenExpired(authToken);
+  if (tokenExpired) {
+    return Response.redirect(url.origin + github.refreshUrl);
+  }
+
+  return ctx.next();
 }

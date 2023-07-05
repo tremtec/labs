@@ -3,7 +3,6 @@ import AppLayout from "~/components/layouts/AppLayout.tsx";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { client } from "~/services/github.ts";
 import { UserProfile } from "#/entities/userProfile.ts";
-import { UserProfileNotFound } from "#/entities/exceptions.ts";
 
 type Data = {
   userProfile: UserProfile;
@@ -11,8 +10,7 @@ type Data = {
 
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
-    const userProfile = await client.getAuthenticatedUser(req);
-    if (!userProfile) throw UserProfileNotFound;
+    const userProfile = await client.fetchAuthenticatedUser(req);
     return ctx.render({ userProfile });
   },
 };

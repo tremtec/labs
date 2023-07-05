@@ -34,6 +34,7 @@ export const github = {
   clientId: env.GITHUB_CLIENT_ID,
   clientSecret: env.GITHUB_CLIENT_SECRET,
   callbackUrl: "/api/auth/github/callback",
+  refreshUrl: "/api/auth/github/refresh",
   logoutUrl: "/api/auth/logout",
   signInUrl: "/api/auth/github",
   cookieAuthKey: "GH_AUTH_KEY",

@@ -5,7 +5,7 @@ import { github, site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
 import { addVisit, getVisits, Visits } from "~/shared/db.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { client } from "~/services/github.ts";
+import { cookies } from "~/services/github.ts";
 
 type Data = {
   visits: Visits;
@@ -14,7 +14,7 @@ type Data = {
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
     const url = new URL(req.url);
-    if (client.cookieAccessToken(req)) {
+    if (cookies.getAuthToken(req)) {
       return Response.redirect(url.origin + "/app");
     }
 

@@ -5,14 +5,15 @@
 import * as $0 from "./routes/_app.tsx";
 import * as $1 from "./routes/api/auth/github/callback.ts";
 import * as $2 from "./routes/api/auth/github/index.ts";
-import * as $3 from "./routes/api/auth/github/webhook.ts";
-import * as $4 from "./routes/api/auth/logout.ts";
-import * as $5 from "./routes/api/index.ts";
-import * as $6 from "./routes/app/_middleware.ts";
-import * as $7 from "./routes/app/index.tsx";
-import * as $8 from "./routes/app/interviews.tsx";
-import * as $9 from "./routes/app/profile.tsx";
-import * as $10 from "./routes/index.tsx";
+import * as $3 from "./routes/api/auth/github/refresh.ts";
+import * as $4 from "./routes/api/auth/github/webhook.ts";
+import * as $5 from "./routes/api/auth/logout.ts";
+import * as $6 from "./routes/api/index.ts";
+import * as $7 from "./routes/app/_middleware.ts";
+import * as $8 from "./routes/app/index.tsx";
+import * as $9 from "./routes/app/interviews.tsx";
+import * as $10 from "./routes/app/profile.tsx";
+import * as $11 from "./routes/index.tsx";
 import * as $$0 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
@@ -20,14 +21,15 @@ const manifest = {
     "./routes/_app.tsx": $0,
     "./routes/api/auth/github/callback.ts": $1,
     "./routes/api/auth/github/index.ts": $2,
-    "./routes/api/auth/github/webhook.ts": $3,
-    "./routes/api/auth/logout.ts": $4,
-    "./routes/api/index.ts": $5,
-    "./routes/app/_middleware.ts": $6,
-    "./routes/app/index.tsx": $7,
-    "./routes/app/interviews.tsx": $8,
-    "./routes/app/profile.tsx": $9,
-    "./routes/index.tsx": $10,
+    "./routes/api/auth/github/refresh.ts": $3,
+    "./routes/api/auth/github/webhook.ts": $4,
+    "./routes/api/auth/logout.ts": $5,
+    "./routes/api/index.ts": $6,
+    "./routes/app/_middleware.ts": $7,
+    "./routes/app/index.tsx": $8,
+    "./routes/app/interviews.tsx": $9,
+    "./routes/app/profile.tsx": $10,
+    "./routes/index.tsx": $11,
   },
   islands: {
     "./islands/ThemeSwitcher.tsx": $$0,

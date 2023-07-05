@@ -1,6 +1,6 @@
 import { Handler } from "$fresh/server.ts";
 import { logger } from "~/shared/logging.ts";
-import { client, setAuthCookie } from "~/services/github.ts";
+import { client } from "~/services/github.ts";
 
 export const handler: Handler = async (req, ctx) => {
   const url = new URL(req.url);
@@ -13,8 +13,7 @@ export const handler: Handler = async (req, ctx) => {
   logger.info({ code });
 
   // persist session
-  const accessToken = await client.getAccessToken(code);
-  const headers = setAuthCookie(req, accessToken);
+  const headers = await client.persistAuthToken(code, req);
 
   // redirect to app
   headers.set("location", `${url.origin}/app`);
