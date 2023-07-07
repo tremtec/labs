@@ -185,7 +185,7 @@ class AuthCookies {
       sameSite: "Lax", // this is important to prevent CSRF attacks
       domain: url.hostname,
       path: "/",
-      secure: true,
+      secure: url.href.startsWith("https"),
     };
 
     const headers = new Headers({ location: url.origin });
