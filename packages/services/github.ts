@@ -29,7 +29,6 @@ class GitHubClient {
       scope: github.scope,
       state: state.toString(),
       client_id: github.clientId,
-      client_secret: github.clientSecret,
       redirect_uri: url.origin + github.callbackUrl,
     };
 
