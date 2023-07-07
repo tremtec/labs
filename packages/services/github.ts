@@ -64,8 +64,15 @@ class GitHubClient {
 
     logger.debug("token expired");
 
-    const newAuthToken = await this.refreshExpiredToken(authToken.refreshToken);
-    return cookies.setAuthToken(req, newAuthToken);
+    try {
+      const newAuthToken = await this.refreshExpiredToken(
+        authToken.refreshToken,
+      );
+      return cookies.setAuthToken(req, newAuthToken);
+    } catch (error) {
+      logger.error({ info: "failed to refresh token", error });
+      return null;
+    }
   }
 
   async isTokenExpired({ accessToken }: AuthToken) {
