@@ -14,7 +14,7 @@ const AUTH_URL = "https://github.com/login/oauth";
 const API_URL = "https://api.github.com";
 
 class GitHubClient {
-  headers = {
+  private headers = {
     "Accept": "application/json",
     "Content-Type": "application/json",
   };
@@ -32,6 +32,8 @@ class GitHubClient {
       client_secret: github.clientSecret,
       redirect_uri: url.origin + github.callbackUrl,
     };
+
+    logger.debug({ info: "creating redirect link", params });
 
     for (const [key, value] of Object.entries(params)) {
       redirectUrl.searchParams.append(key, value);
@@ -56,6 +58,13 @@ class GitHubClient {
     const authToken = cookies.getAuthToken(req);
     if (!authToken) return null;
 
+    logger.debug("token exists");
+
+    const isTokenExpired = await this.isTokenExpired(authToken);
+    if (!isTokenExpired) return null;
+
+    logger.debug("token expired");
+
     const newAuthToken = await this.refreshExpiredToken(authToken.refreshToken);
     return cookies.setAuthToken(req, newAuthToken);
   }
@@ -73,6 +82,9 @@ class GitHubClient {
       client_id: github.clientId,
       client_secret: github.clientSecret,
     };
+
+    logger.debug({ info: "fetch token", params });
+
     const response = await fetch(
       AUTH_URL + "/access_token",
       {
@@ -128,6 +140,8 @@ class GitHubClient {
       refresh_token: refreshToken,
     };
 
+    logger.debug({ info: "refreshing token", params });
+
     const response = await fetch(AUTH_URL + "/access_token", {
       method: "POST",
       body: JSON.stringify(params),
@@ -142,7 +156,12 @@ class GitHubClient {
     const accessToken = data["access_token"];
     const refreshToken = data["refresh_token"];
 
-    logger.debug({ accessToken, refreshToken, data });
+    logger.debug({
+      info: "parsing auth token from json",
+      accessToken,
+      refreshToken,
+      data,
+    });
     return AuthTokenSchema.parse({ accessToken, refreshToken });
   }
 }
