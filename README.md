@@ -1,4 +1,4 @@
-# TremTec Lab
+# TremTec Labs
 
 This project implements the web app for [TremTec labs](https://labs.tremtec.com).
 
