@@ -1,6 +1,6 @@
 # TremTec Lab
 
-This project implements the web app for [TremTec labs]|(https://labs.tremtec.com).
+This project implements the web app for [TremTec labs](https://labs.tremtec.com).
 
 ## Tech Stack
 
