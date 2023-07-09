@@ -47,12 +47,14 @@ export default function Home(props: PageProps<Data>) {
           Chat @{username}
         </h1>
 
-        <div className="messages grid gap-2 font-mono bg(gray-300 dark:gray-700) h-24 p-4 rounded overflow-auto">
-          {messages.map((m) => (
-            <p key={m.id} class={m.sender === username ? "text-bold" : ""}>
-              @{m.sender === username ? "me" : username}: {m.message}
-            </p>
-          ))}
+        <div class="messages grid gap-2 font-mono bg(gray-300 dark:gray-700) h-24 p-4 rounded overflow-auto">
+          {messages.length !== 0
+            ? <p class="text-center">No message found yet</p>
+            : messages.map((m) => (
+              <p key={m.id} class={m.sender === username ? "text-bold" : ""}>
+                @{m.sender === username ? "me" : username}: {m.message}
+              </p>
+            ))}
         </div>
 
         <form method="POST" class="flex">
