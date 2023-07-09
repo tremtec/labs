@@ -1,24 +1,24 @@
 import { MiddlewareHandlerContext } from "$fresh/server.ts";
 import { github } from "#/settings.ts";
-import { client, cookies } from "~/services/github.ts";
+import { cookies } from "~/services/github.ts";
 import { logger } from "~/shared/logging.ts";
 
-export async function handler(
+export function handler(
   req: Request,
   ctx: MiddlewareHandlerContext,
 ) {
   const url = new URL(req.url);
-  const authToken = cookies.getAuthToken(req);
-  if (!authToken) {
-    logger.debug({ info: "no auth token found, redirecting to logout" });
-    return Response.redirect(url.origin + github.logoutUrl);
-  }
+  const authToken = cookies.getAccessToken(req);
+  if (authToken) return ctx.next();
 
-  const tokenExpired = await client.isTokenExpired(authToken);
-  if (tokenExpired) {
-    logger.debug({ info: "auth token expired, refreshing tokens" });
+  logger.debug({ info: "auth token expired" });
+
+  const refreshToken = cookies.getRefreshToken(req);
+  if (refreshToken) {
+    logger.debug({ info: "refreshing tokens" });
     return Response.redirect(url.origin + github.refreshUrl);
   }
 
-  return ctx.next();
+  logger.debug({ info: "refresh token expired, redirecting to logout" });
+  return Response.redirect(url.origin + github.logoutUrl);
 }

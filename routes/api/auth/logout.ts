@@ -1,12 +1,11 @@
 import { Handler } from "$fresh/server.ts";
 import { cookies } from "~/services/github.ts";
+import { logger } from "~/shared/logging.ts";
 
 export const handler: Handler = (req) => {
-  const headers = cookies.deleteAuthToken(req);
-  headers.set("location", "/");
-
+  logger.debug("logout user");
   return new Response(null, {
     status: 302,
-    headers,
+    headers: cookies.deleteAuthToken(req),
   });
 };

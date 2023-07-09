@@ -43,43 +43,30 @@ class GitHubClient {
 
   async fetchAuthenticatedUser(req: Request): Promise<UserProfile> {
     // Get cookie from request header and parse it
-    const authToken = cookies.getAuthToken(req);
-    if (!authToken) return raise("No session found");
-    return await this.fetchUserData(authToken);
+    const accessToken = cookies.getAccessToken(req);
+    if (!accessToken) return raise("No session found");
+    return await this.fetchUserData(accessToken);
   }
 
   async persistAuthToken(code: string, req: Request) {
-    const accessToken = await this.fetchAuthToken(code);
-    return cookies.setAuthToken(req, accessToken);
+    const authToken = await this.fetchAuthToken(code);
+    return cookies.setAuthToken(req, authToken);
   }
 
   async refreshAuthToken(req: Request) {
-    const authToken = cookies.getAuthToken(req);
-    if (!authToken) return null;
-
-    logger.debug("token exists");
-
-    const isTokenExpired = await this.isTokenExpired(authToken);
-    if (!isTokenExpired) return null;
-
-    logger.debug("token expired");
+    const refreshToken = cookies.getRefreshToken(req);
+    if (!refreshToken) {
+      logger.error({ info: "no refresh token found" });
+      return null;
+    }
 
     try {
-      const newAuthToken = await this.refreshExpiredToken(
-        authToken.refreshToken,
-      );
+      const newAuthToken = await this.refreshExpiredToken(refreshToken);
       return cookies.setAuthToken(req, newAuthToken);
     } catch (error) {
       logger.error({ info: "failed to refresh token", error });
       return null;
     }
-  }
-
-  async isTokenExpired({ accessToken }: AuthToken) {
-    const ping = await fetch(API_URL + "/user", {
-      headers: { Authorization: `token ${accessToken}` },
-    });
-    return !ping.ok;
   }
 
   private async fetchAuthToken(code: string) {
@@ -111,9 +98,7 @@ class GitHubClient {
     return authToken;
   }
 
-  private async fetchUserData(
-    { accessToken }: AuthToken,
-  ): Promise<UserProfile> {
+  private async fetchUserData(accessToken: string): Promise<UserProfile> {
     const response = await fetch(API_URL + "/user", {
       headers: { Authorization: `token ${accessToken}` },
     });
@@ -159,55 +144,62 @@ class GitHubClient {
   }
 
   private parseAuthToken(data: ReturnType<typeof JSON.parse>) {
-    const accessToken = data["access_token"];
-    const refreshToken = data["refresh_token"];
-
     logger.debug({
       info: "parsing auth token from json",
-      accessToken,
-      refreshToken,
       data,
     });
-    return AuthTokenSchema.parse({ accessToken, refreshToken });
+    return AuthTokenSchema.parse(data);
   }
 }
 
 class AuthCookies {
-  getAuthToken(req: Request) {
-    // Get cookie from request header and parse it
-    const value = getCookies(req.headers)[github.cookieAuthKey] ?? "";
-    if (value.trim() === "") return null;
+  getAccessToken(req: Request) {
+    return getCookies(req.headers)["access_token"];
+  }
 
-    const [accessToken = "", refreshToken = ""] = value.split(":");
-    return AuthTokenSchema.parse({ accessToken, refreshToken });
+  getRefreshToken(req: Request) {
+    return getCookies(req.headers)["refresh_token"];
   }
 
   setAuthToken(req: Request, accessToken: AuthToken) {
     const url = new URL(req.url);
-    const cookie: Cookie = {
-      name: github.cookieAuthKey,
-      value: `${accessToken.accessToken}:${accessToken.refreshToken}`,
-      maxAge: 60 * 60 * 24 * 7,
-      httpOnly: true,
-      sameSite: "Lax", // this is important to prevent CSRF attacks
-      domain: url.hostname,
-      path: "/",
-      secure: url.href.startsWith("https"),
-    };
-
     const headers = new Headers({ location: url.origin });
-    setCookie(headers, cookie);
+    const tokens: [string, string, number][] = [
+      ["access_token", accessToken.access_token, accessToken.expires_in],
+      [
+        "refresh_token",
+        accessToken.refresh_token,
+        accessToken.refresh_token_expires_in,
+      ],
+    ];
+
+    for (const [name, token, expires_at] of tokens) {
+      const cookie: Cookie = {
+        name,
+        value: token,
+        maxAge: expires_at,
+        httpOnly: true,
+        sameSite: "Lax", // this is important to prevent CSRF attacks
+        domain: url.hostname,
+        path: "/",
+        secure: url.href.startsWith("https"),
+      };
+
+      setCookie(headers, cookie);
+    }
 
     return headers;
   }
 
   deleteAuthToken(req: Request) {
     const url = new URL(req.url);
-    const headers = new Headers(req.headers);
+    const headers = new Headers({ location: url.origin });
 
-    deleteCookie(headers, github.cookieAuthKey, {
-      path: "/",
-      domain: url.hostname,
+    ["access_token", "refresh_token"].map((key) => {
+      deleteCookie(headers, key, {
+        path: "/",
+        domain: url.hostname,
+      });
     });
 
     return headers;
@@ -217,8 +209,12 @@ class AuthCookies {
 type AuthToken = z.infer<typeof AuthTokenSchema>;
 
 const AuthTokenSchema = z.object({
-  accessToken: z.string(),
-  refreshToken: z.string(),
+  scope: z.string(),
+  token_type: z.string(),
+  access_token: z.string(),
+  expires_in: z.number(),
+  refresh_token: z.string(),
+  refresh_token_expires_in: z.number(),
 });
 
 const GithubApiErrorSchema = z.object({

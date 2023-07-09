@@ -37,7 +37,5 @@ export const github = {
   refreshUrl: "/api/auth/github/refresh",
   logoutUrl: "/api/auth/logout",
   signInUrl: "/api/auth/github",
-  cookieAuthKey: "GH_AUTH_KEY",
-  tokenUri: "https://github.com/login/oauth/access_token",
   scope: "read:user" as const,
 };

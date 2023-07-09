@@ -14,7 +14,7 @@ type Data = {
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
     const url = new URL(req.url);
-    if (cookies.getAuthToken(req)) {
+    if (cookies.getAccessToken(req)) {
       return Response.redirect(url.origin + "/app");
     }
 
