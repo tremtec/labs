@@ -12,8 +12,7 @@ import * as $6 from "./routes/app/_middleware.ts";
 import * as $7 from "./routes/app/chat.tsx";
 import * as $8 from "./routes/app/index.tsx";
 import * as $9 from "./routes/app/interviews.tsx";
-import * as $10 from "./routes/app/profile.tsx";
-import * as $11 from "./routes/index.tsx";
+import * as $10 from "./routes/index.tsx";
 import * as $$0 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
@@ -28,8 +27,7 @@ const manifest = {
     "./routes/app/chat.tsx": $7,
     "./routes/app/index.tsx": $8,
     "./routes/app/interviews.tsx": $9,
-    "./routes/app/profile.tsx": $10,
-    "./routes/index.tsx": $11,
+    "./routes/index.tsx": $10,
   },
   islands: {
     "./islands/ThemeSwitcher.tsx": $$0,

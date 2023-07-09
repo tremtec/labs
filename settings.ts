@@ -20,7 +20,6 @@ export const privateNavLinks: NavLink[] = [
   { link: "/app", name: "Dashboard" },
   { link: "/app/chat", name: "Chat" },
   { link: "/app/interviews", name: "Interviews" },
-  { link: "/app/profile", name: "Profile" },
 ];
 
 const VarEnvSchema = z.object({
