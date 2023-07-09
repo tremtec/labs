@@ -92,10 +92,7 @@ class GitHubClient {
     }
 
     const data = await response.json();
-    const authToken = this.parseAuthToken(data);
-
-    logger.debug({ authToken, data });
-    return authToken;
+    return this.parseAuthToken(data);
   }
 
   private async fetchUserData(accessToken: string): Promise<UserProfile> {

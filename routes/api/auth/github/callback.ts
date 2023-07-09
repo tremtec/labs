@@ -1,5 +1,4 @@
 import { Handler } from "$fresh/server.ts";
-import { logger } from "~/shared/logging.ts";
 import { client } from "~/services/github.ts";
 
 export const handler: Handler = async (req, ctx) => {
@@ -10,7 +9,6 @@ export const handler: Handler = async (req, ctx) => {
   }
 
   // TODO: save User to DB
-  logger.info({ code });
 
   // persist session
   const headers = await client.persistAuthToken(code, req);
