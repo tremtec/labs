@@ -3,9 +3,9 @@ import MainLayout from "~/components/layouts/MainLayout.tsx";
 
 import { github, site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
-import { addVisit, getVisits, Visits } from "~/shared/db.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { cookies } from "~/services/github.ts";
+import { Visits, visits } from "~/repositories/visits.dao.ts";
 
 type Data = {
   visits: Visits;
@@ -18,12 +18,12 @@ export const handler: Handlers<Data> = {
       return Response.redirect(url.origin + "/app");
     }
 
-    await addVisit();
+    await visits.addVisit();
 
-    const visits = await getVisits();
-    logger.debug({ visits });
+    const data: Data = { visits: await visits.getVisits() };
+    logger.debug(data);
 
-    return ctx.render({ visits });
+    return ctx.render(data);
   },
 };
 
