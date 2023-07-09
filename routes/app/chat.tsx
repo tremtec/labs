@@ -48,7 +48,7 @@ export default function Home(props: PageProps<Data>) {
         </h1>
 
         <div class="messages grid gap-2 font-mono bg(gray-300 dark:gray-700) h-24 p-4 rounded overflow-auto">
-          {messages.length !== 0
+          {messages.length === 0
             ? <p class="text-center">No message found yet</p>
             : messages.map((m) => (
               <p key={m.id} class={m.sender === username ? "text-bold" : ""}>
