@@ -52,7 +52,7 @@ export default function Home(props: PageProps<Data>) {
             ? <p class="text-center">No message found yet</p>
             : messages.map((m) => (
               <p key={m.id} class={m.sender === username ? "text-bold" : ""}>
-                @{m.sender === username ? "me" : username}: {m.message}
+                @{m.sender === username ? "me" : m.username}: {m.message}
               </p>
             ))}
         </div>
