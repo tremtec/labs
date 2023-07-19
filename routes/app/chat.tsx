@@ -1,28 +1,14 @@
 import AppLayout from "~/components/layouts/AppLayout.tsx";
 
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { Handlers } from "$fresh/server.ts";
 import { client } from "~/services/github.ts";
-import { UserProfile } from "#/entities/userProfile.ts";
-import { Message } from "#/entities/chat.ts";
 import { chat } from "~/repositories/chat.dao.ts";
 import { Button } from "~/components/Button.tsx";
 import { logger } from "~/shared/logging.ts";
 import { raise } from "~/shared/exceptions.ts";
+import { MessageInputSchema } from "#/entities/chat.ts";
 
-type Data = {
-  userProfile: UserProfile;
-  messages: Message[];
-};
-
-export const handler: Handlers<Data> = {
-  async GET(req, ctx) {
-    const userProfile = await client.fetchAuthenticatedUser(req);
-    const messages = await chat.listMessages();
-    const data: Data = { messages, userProfile };
-
-    logger.debug({ data });
-    return ctx.render(data);
-  },
+export const handler: Handlers = {
   async POST(req) {
     const formData = await req.formData();
     const message = formData.get("message")?.toString() ??
@@ -30,18 +16,28 @@ export const handler: Handlers<Data> = {
     const sender = formData.get("sender")?.toString() ??
       raise("No sender found");
 
-    logger.debug({ message, sender });
-    await chat.addMessage({ message, sender });
+    const input = MessageInputSchema.safeParse({ message, sender });
+
+    if (!input.success) {
+      const url = new URL(req.url);
+      url.searchParams.set("error", input.error.toString());
+      return Response.redirect(url);
+    }
+
+    logger.debug({ input });
+    await chat.addMessage(input.data);
 
     return Response.redirect(req.url);
   },
 };
 
-export default function Home(props: PageProps<Data>) {
-  const { userProfile, messages } = props.data;
-  const { username } = userProfile;
+export default async function Chat(req: Request) {
+  const url = new URL(req.url);
+  const { username } = await client.fetchAuthenticatedUser(req);
+  const messages = await chat.listMessages();
+
   return (
-    <AppLayout path={props.url.pathname ?? "/"}>
+    <AppLayout path={url.pathname ?? "/"}>
       <div class="p-4 text-left grid gap-2">
         <h1 class="text-2xl">
           Chat @{username}

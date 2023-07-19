@@ -6,6 +6,7 @@ import {
 } from "#/entities/chat.ts";
 import { raise } from "~/shared/exceptions.ts";
 import { kv } from "~/repositories/db.ts";
+import { logger } from "~/shared/logging.ts";
 
 class ChatDao {
   private prefixKey = "chat:message";
@@ -25,7 +26,13 @@ class ChatDao {
 
     const messages: Message[] = [];
     for await (const item of messagesIter) {
-      messages.push(MessageSchema.parse(item.value));
+      const msg = MessageSchema.safeParse(item.value);
+      if (!msg.success) {
+        logger.error(msg.error);
+        await kv.delete(item.key);
+        continue;
+      }
+      messages.push(msg.data);
     }
 
     return messages;
