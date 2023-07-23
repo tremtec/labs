@@ -7,6 +7,7 @@ import { Button } from "~/components/Button.tsx";
 import { logger } from "~/shared/logging.ts";
 import { raise } from "~/shared/exceptions.ts";
 import { MessageInputSchema } from "#/entities/chat.ts";
+import { dateFormatter } from "~/shared/date.ts";
 
 export const handler: Handlers = {
   async POST(req) {
@@ -48,7 +49,8 @@ export default async function Chat(req: Request) {
             ? <p class="text-center">No message found yet</p>
             : messages.map((m) => (
               <p key={m.id} class={m.sender === username ? "text-bold" : ""}>
-                @{m.sender === username ? "me" : m.sender}: {m.message}
+                @{m.sender === username ? "me" : m.sender} at{" "}
+                {dateFormatter(m.createdAt)}: {m.message}
               </p>
             ))}
         </div>
