@@ -6,8 +6,9 @@ import { chat } from "~/repositories/chat.dao.ts";
 import { Button } from "~/components/Button.tsx";
 import { logger } from "~/shared/logging.ts";
 import { raise } from "~/shared/exceptions.ts";
-import { MessageInputSchema } from "#/entities/chat.ts";
+import { Message, MessageInputSchema } from "#/entities/chat.ts";
 import { dateFormatter } from "~/shared/date.ts";
+import { inverseColor, textToRGB } from "~/shared/text.ts";
 
 export const handler: Handlers = {
   async POST(req) {
@@ -47,12 +48,7 @@ export default async function Chat(req: Request) {
         <div class="messages grid gap-2 font-mono bg(gray-300 dark:gray-700) h-24 p-4 rounded overflow-auto">
           {messages.length === 0
             ? <p class="text-center">No message found yet</p>
-            : messages.map((m) => (
-              <p key={m.id} class={m.sender === username ? "text-bold" : ""}>
-                @{m.sender === username ? "me" : m.sender} at{" "}
-                {dateFormatter(m.createdAt)}: {m.message}
-              </p>
-            ))}
+            : messages.map((m) => <MessageDisplay m={m} username={username} />)}
         </div>
 
         <form method="POST" class="flex">
@@ -73,5 +69,26 @@ export default async function Chat(req: Request) {
         </form>
       </div>
     </AppLayout>
+  );
+}
+
+type MessageDisplayProps = {
+  m: Message;
+  username: string;
+};
+
+function MessageDisplay({ m, username }: MessageDisplayProps) {
+  const user = m.sender === username ? "me" : m.sender;
+  const date = dateFormatter(m.createdAt);
+  const color = textToRGB(username);
+  const usernameStyle = `text-[rgb(${color})] px-1`
+  return (
+    <p key={m.id} class={`${m.sender === username ? "text-bold" : ""} flex flex-row gap-2`}>
+      <span class={usernameStyle}>
+        @{user}
+      </span>
+      <span class="flex-1">{m.message}</span>
+      <span class="text-xs">- {date}</span>
+    </p>
   );
 }
