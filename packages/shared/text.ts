@@ -3,7 +3,6 @@ export function hashCode(str: string) {
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
-  console.log(hash)
   return Math.abs(hash);
 }
 
