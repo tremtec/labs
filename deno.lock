@@ -272,5 +272,28 @@
     "https://esm.sh/v124/twind@0.16.19/deno/sheets.js": "dcdb26e5d2860d9fff3ad81b81625799e501d465efdc99b206d3b7cd94151913",
     "https://esm.sh/v124/twind@0.16.19/deno/twind.mjs": "ac4bf729653ee66349a518ee4949f22e84b7f626e8f74de1066e798a7c1ca12a",
     "https://esm.sh/v129/preact-render-to-string@6.2.0/X-ZS8q/denonext/preact-render-to-string.mjs": "835eb2413a25f1142bcb87ea4df7d85bb3dbf48569ec3aa693b80a618cec3706"
+  },
+  "npm": {
+    "specifiers": {
+      "date-fns": "date-fns@2.30.0"
+    },
+    "packages": {
+      "@babel/runtime@7.22.6": {
+        "integrity": "sha512-wDb5pWm4WDdF6LFUde3Jl8WzPA+3ZbxYqkC6xAXuD3irdEHN1k0NfTRrJD8ZD378SJ61miMLCqIOXYhd8x+AJQ==",
+        "dependencies": {
+          "regenerator-runtime": "regenerator-runtime@0.13.11"
+        }
+      },
+      "date-fns@2.30.0": {
+        "integrity": "sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==",
+        "dependencies": {
+          "@babel/runtime": "@babel/runtime@7.22.6"
+        }
+      },
+      "regenerator-runtime@0.13.11": {
+        "integrity": "sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==",
+        "dependencies": {}
+      }
+    }
   }
 }
