@@ -11,6 +11,7 @@ function formatDistance(start: Date, end: Date) {
       unit.length - (value === 1 ? 1 : 0),
     );
     if (value > 0) return `at ${value} ${parsedUnit} ago`;
+    else if (unit === "minutes") return "less than 1 minute ago";
     continue;
   }
 
