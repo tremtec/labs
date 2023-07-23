@@ -1,4 +1,4 @@
-import { formatDistance } from "npm:date-fns"
+import { formatDistance } from "date-fns"
 
 export const now = () => new Date();
 
