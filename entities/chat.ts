@@ -3,8 +3,8 @@ import { v1 } from "$std/uuid/mod.ts";
 
 export const MessageSchema = z.object({
   id: z.string().uuid(),
-  sender: z.string().min(3),
-  message: z.string().min(1),
+  sender: z.string().trim().min(3),
+  message: z.string().trim().min(1),
   createdAt: z.date(),
 });
 

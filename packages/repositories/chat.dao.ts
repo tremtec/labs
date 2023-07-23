@@ -10,19 +10,24 @@ import { logger } from "~/shared/logging.ts";
 
 class ChatDao {
   private prefixKey = "chat:message";
+  private prefixSortedKey = "chat:message:sorted";
 
   constructor(private db: Deno.Kv) {}
 
   async addMessage(msg: MessageInput): Promise<Message> {
     const message = createMessage(msg);
-    const res = await this.db.set([this.prefixKey, message.id], message);
+    const res = await this.db.atomic()
+      .set([this.prefixKey, message.id], message)
+      .set([this.prefixSortedKey, message.createdAt.getTime()], message)
+      .commit();
     return res.ok ? message : raise("failed to insert");
   }
 
-  async listMessages(): Promise<Message[]> {
-    const messagesIter = this.db.list({
-      prefix: [this.prefixKey],
-    });
+  async listMessages({ limit = 10, cursor = "" } = {}): Promise<Message[]> {
+    const messagesIter = this.db.list(
+      { prefix: [this.prefixSortedKey] },
+      { reverse: true, limit, cursor },
+    );
 
     const messages: Message[] = [];
     for await (const item of messagesIter) {
