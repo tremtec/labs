@@ -81,9 +81,12 @@ function MessageDisplay({ m, username }: MessageDisplayProps) {
   const user = m.sender === username ? "me" : m.sender;
   const date = dateFormatter(m.createdAt);
   const color = textToRGB(username);
-  const usernameStyle = `text-[rgb(${color})] px-1`
+  const usernameStyle = `text-[rgb(${color})] px-1`;
   return (
-    <p key={m.id} class={`${m.sender === username ? "text-bold" : ""} flex flex-row gap-2`}>
+    <p
+      key={m.id}
+      class={`${m.sender === username ? "text-bold" : ""} flex flex-row gap-2`}
+    >
       <span class={usernameStyle}>
         @{user}
       </span>
