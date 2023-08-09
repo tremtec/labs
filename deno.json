@@ -2,7 +2,8 @@
   "tasks": {
     "encrypt": "ansible-vault encrypt .env --output .env.encrypted",
     "decrypt": "ansible-vault decrypt .env.encrypted --output .env",
-    "start": "deno run --unstable -A --watch=static/,routes/ dev.ts"
+    "start": "deno run --unstable -A --watch=static/,routes/ dev.ts",
+    "cli": "deno run --unstable -A cli/tt.ts"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
@@ -14,6 +15,7 @@
     "~/": "./packages/",
     "$std/": "https://deno.land/std@0.197.0/",
     "$fresh/": "https://deno.land/x/fresh@1.3.1/",
+    "cliffy/": "https://deno.land/x/cliffy@v1.0.0-rc.2/",
     "zod": "https://deno.land/x/zod@v3.21.4/mod.ts",
     "preact": "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/",
