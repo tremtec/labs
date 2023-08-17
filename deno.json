@@ -3,6 +3,7 @@
     "encrypt": "ansible-vault encrypt .env --output .env.encrypted",
     "decrypt": "ansible-vault decrypt .env.encrypted --output .env",
     "start": "deno run --unstable -A --watch=static/,routes/ dev.ts",
+    "test": "deno test --unstable -A",
     "cli": "deno run --unstable -A cli/tt.ts",
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts"
