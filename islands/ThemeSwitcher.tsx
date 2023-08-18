@@ -1,6 +1,6 @@
 import { JSX } from "preact";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { signal, useSignal } from "@preact/signals";
+import { useSignal } from "@preact/signals";
 import { Button } from "~/components/Button.tsx";
 import Gear from "~/icon/Gear.tsx";
 import Moon from "~/icon/Moon.tsx";
