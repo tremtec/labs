@@ -3,9 +3,10 @@ import { cookies } from "~/services/github.ts";
 class RedirectService {
   redirectToProtect(req: Request) {
     const url = new URL(req.url);
+    const isProtectedRoute = url.pathname.startsWith("/app");
+    const hasAuthCookie = Boolean(cookies.getAccessToken(req));
 
-    if (url.pathname.startsWith("/app")) return;
-    if (!cookies.getAccessToken(req)) return;
+    if (!hasAuthCookie || isProtectedRoute) return;
 
     return Response.redirect(url.origin + "/app");
   }
