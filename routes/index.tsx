@@ -1,41 +1,21 @@
-import TremTecLogo from "~/icon/TremTecLogo.tsx";
-import MainLayout from "~/components/layouts/MainLayout.tsx";
-
 import { github, site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
-import { Handlers, PageProps } from "$fresh/server.ts";
-import { cookies } from "~/services/github.ts";
-import { Visits, visits } from "~/repositories/visits.dao.ts";
+import { defineRoute } from "$fresh/server.ts";
+import { visitsService } from "~/services/visits.ts";
+import TremTecLogo from "~/icon/TremTecLogo.tsx";
 
-type Data = {
-  visits: Visits;
-};
+export default defineRoute(async () => {
+  const data = await visitsService.getVisits();
+  logger.debug(data);
 
-export const handler: Handlers<Data> = {
-  async GET(req, ctx) {
-    const url = new URL(req.url);
-    if (cookies.getAccessToken(req)) {
-      return Response.redirect(url.origin + "/app");
-    }
-
-    await visits.addVisit();
-
-    const data: Data = { visits: await visits.getVisits() };
-    logger.debug(data);
-
-    return ctx.render(data);
-  },
-};
-
-export default function Home(props: PageProps<Data>) {
-  const { dailyVisits, visits } = props.data.visits;
+  const { dailyVisits, visits } = data;
   const percentageOfVisitsToday = (100 * dailyVisits / visits).toFixed(2);
   const textVisits = `This page received ${dailyVisits} visits today`;
   const textPercentage =
     `${dailyVisits}/${visits} (${percentageOfVisitsToday}% on the total)`;
 
   return (
-    <MainLayout>
+    <>
       <div class="text-center flex flex-col gap-8 items-center">
         <h1 class="text-2xl">
           <TremTecLogo size={240} class="animate-bounce hover:animate-ping" />
@@ -53,6 +33,6 @@ export default function Home(props: PageProps<Data>) {
           <button title="login via github">Github</button>
         </form>
       </div>
-    </MainLayout>
+    </>
   );
-}
+});
