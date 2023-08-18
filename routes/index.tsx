@@ -1,10 +1,13 @@
 import { github, site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
 import { defineRoute } from "$fresh/server.ts";
-import { visitsService } from "~/services/visits.ts";
+import { VisitsService } from "~/services/visits.ts";
 import TremTecLogo from "~/icon/TremTecLogo.tsx";
+import { injector } from "~/shared/di.ts";
 
 export default defineRoute(async () => {
+  const visitsService = injector.get(VisitsService);
+
   const data = await visitsService.getVisits();
   logger.debug(data);
 

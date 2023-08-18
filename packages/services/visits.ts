@@ -1,10 +1,11 @@
-import { visits } from "~/repositories/visits.dao.ts";
+import { VisitsDao } from "~/repositories/visits.dao.ts";
+import { injector } from "~/shared/di.ts";
 
-class VisitsService {
+export class VisitsService {
+  private visits = injector.get(VisitsDao)
+
   async getVisits() {
-    await visits.addVisit();
-    return visits.getVisits();
+    await this.visits.addVisit();
+    return this.visits.getVisits();
   }
 }
-
-export const visitsService = new VisitsService();

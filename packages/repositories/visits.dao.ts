@@ -1,5 +1,6 @@
 import { logger } from "~/shared/logging.ts";
-import { kv } from "~/repositories/db.ts";
+import { Database } from "~/repositories/db.ts";
+import { injector } from "~/shared/di.ts";
 
 enum Keys {
   daily_visits,
@@ -11,16 +12,17 @@ export type Visits = {
   dailyVisits: number;
 };
 
-class VisitsDao {
-  constructor(private kv: Deno.Kv) {}
+export class VisitsDao {
+  private database = injector.get(Database);
 
   async addVisit() {
     const { dailyVisits, visits } = await this.getVisits();
-    const res = await this.kv.atomic()
-      .set(
-        [Keys.daily_visits, this.parseToDateString(new Date())],
-        dailyVisits + 1,
-      )
+
+    const kv = await this.database.connect();
+    const res = await kv.atomic().set(
+      [Keys.daily_visits, this.parseToDateString(new Date())],
+      dailyVisits + 1,
+    )
       .set([Keys.visits], visits + 1)
       .commit();
 
@@ -43,8 +45,10 @@ class VisitsDao {
   private fetchDailyVisits = (date = new Date()) =>
     this.counter([Keys.daily_visits, this.parseToDateString(date)]);
 
-  private counter = (key: Deno.KvKey) =>
-    this.kv.get<number>(key).then(({ value }) => value ?? 0);
+  private counter = async (key: Deno.KvKey) => {
+    const kv = await this.database.connect();
+    return kv.get<number>(key).then(({ value }) => value ?? 0);
+  };
 
   private parseToDateString = (date: Date) =>
     new Date(
@@ -53,5 +57,3 @@ class VisitsDao {
       date.getDate(),
     ).toString();
 }
-
-export const visits = new VisitsDao(kv);

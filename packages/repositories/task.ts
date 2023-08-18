@@ -1,9 +1,12 @@
 import { Task, TaskSchema } from "#/entities/task.ts";
 import { raise } from "~/shared/exceptions.ts";
-import { kv } from "~/repositories/db.ts";
+import { Database, kv } from "~/repositories/db.ts";
 import { logger } from "~/shared/logging.ts";
+import { injector } from "~/shared/di.ts";
 
 export class TaskDao {
+  private database = injector.get(Database);
+
   constructor(private db: Deno.Kv, private userId: string) {}
 
   async add(taskInput: Partial<Task>): Promise<Task> {

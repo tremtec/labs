@@ -1,1 +1,5 @@
-export const kv = await Deno.openKv();
+export class Database {
+  connect() {
+    return Deno.openKv();
+  }
+}
