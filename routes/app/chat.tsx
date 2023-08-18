@@ -1,6 +1,4 @@
-import AppLayout from "~/components/layouts/AppLayout.tsx";
-
-import { Handlers } from "$fresh/server.ts";
+import { defineRoute, Handlers } from "$fresh/server.ts";
 import { client } from "~/services/github.ts";
 import { chat } from "~/repositories/chat.dao.ts";
 import { Button } from "~/components/Button.tsx";
@@ -8,7 +6,7 @@ import { logger } from "~/shared/logging.ts";
 import { raise } from "~/shared/exceptions.ts";
 import { Message, MessageInputSchema } from "#/entities/chat.ts";
 import { dateFormatter } from "~/shared/date.ts";
-import { inverseColor, textToRGB } from "~/shared/text.ts";
+import { textToRGB } from "~/shared/text.ts";
 
 export const handler: Handlers = {
   async POST(req) {
@@ -33,13 +31,13 @@ export const handler: Handlers = {
   },
 };
 
-export default async function Chat(req: Request) {
+export default defineRoute(async (req) => {
   const url = new URL(req.url);
   const { username } = await client.fetchAuthenticatedUser(req);
   const messages = await chat.listMessages();
 
   return (
-    <AppLayout path={url.pathname ?? "/"}>
+    <>
       <div class="p-4 text-left grid gap-2">
         <h1 class="text-2xl">
           Chat @{username}
@@ -68,9 +66,9 @@ export default async function Chat(req: Request) {
           <Button type="submit">Send</Button>
         </form>
       </div>
-    </AppLayout>
+    </>
   );
-}
+});
 
 type MessageDisplayProps = {
   m: Message;
