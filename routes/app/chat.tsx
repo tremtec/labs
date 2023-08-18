@@ -32,7 +32,6 @@ export const handler: Handlers = {
 };
 
 export default defineRoute(async (req) => {
-  const url = new URL(req.url);
   const { username } = await client.fetchAuthenticatedUser(req);
   const messages = await chat.listMessages();
 
@@ -57,13 +56,15 @@ export default defineRoute(async (req) => {
             class="flex-1 py-2 px-4 bg(gray-300 dark:gray-700)"
             placeholder="Enter a new message here"
           />
+
           <input
             hidden
             type="text"
             name="sender"
             value={username}
           />
-          <Button type="submit">Send</Button>
+
+          <Button type="submit" class="border-0 bg(gray-300 dark:gray-700)">Send</Button>
         </form>
       </div>
     </>
