@@ -38,3 +38,5 @@ export const github = {
   signInUrl: "/api/auth/github",
   scope: "read:user" as const,
 };
+
+export const INSTALL_CMD = `echo hello `;
