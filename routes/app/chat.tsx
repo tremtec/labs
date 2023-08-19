@@ -64,7 +64,9 @@ export default defineRoute(async (req) => {
             value={username}
           />
 
-          <Button type="submit" class="border-0 bg(gray-300 dark:gray-700)">Send</Button>
+          <Button type="submit" class="border-0 bg(gray-300 dark:gray-700)">
+            Send
+          </Button>
         </form>
       </div>
     </>

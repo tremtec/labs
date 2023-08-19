@@ -14,6 +14,7 @@ import * as $8 from "./routes/app/_middleware.ts";
 import * as $9 from "./routes/app/chat.tsx";
 import * as $10 from "./routes/app/index.tsx";
 import * as $11 from "./routes/index.tsx";
+import * as $12 from "./routes/install.tsx";
 import * as $$0 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
@@ -30,6 +31,7 @@ const manifest = {
     "./routes/app/chat.tsx": $9,
     "./routes/app/index.tsx": $10,
     "./routes/index.tsx": $11,
+    "./routes/install.tsx": $12,
   },
   islands: {
     "./islands/ThemeSwitcher.tsx": $$0,

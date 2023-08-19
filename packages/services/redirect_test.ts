@@ -13,7 +13,7 @@ Deno.test("Redirect Service", async (t) => {
   };
   const headers = new Headers({ location: origin });
   setCookie(headers, cookie);
-  headers.set("Cookie", headers.get("set-cookie") ?? "")
+  headers.set("Cookie", headers.get("set-cookie") ?? "");
 
   await t.step("should stay if no cookie", () => {
     const req = new Request(origin);
