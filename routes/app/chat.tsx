@@ -81,7 +81,7 @@ type MessageDisplayProps = {
 function MessageDisplay({ m, username }: MessageDisplayProps) {
   const user = m.sender === username ? "me" : m.sender;
   const date = dateFormatter(m.createdAt);
-  const color = textToRGB(username);
+  const color = textToRGB(m.sender);
   const usernameStyle = `text-[rgb(${color})] px-1 text-xs`;
   return (
     <p
