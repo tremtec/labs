@@ -89,8 +89,7 @@ function MessageDisplay({ m, username }: MessageDisplayProps) {
       class={`${m.sender === username ? "text-bold" : ""} flex flex-row gap-1`}
     >
       <p class={usernameStyle}>
-        @{user}
-        <span class="text-xs">- {date}</span>
+        @{user} <span>- {date}</span>
       </p>
       <p>{m.message}</p>
     </p>

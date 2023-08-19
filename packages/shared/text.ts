@@ -1,7 +1,7 @@
 export function hashCode(str: string) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    hash = (str.charCodeAt(i) ^ i)  + ((hash << 5) - hash);
   }
   return Math.abs(hash);
 }
@@ -9,8 +9,9 @@ export function hashCode(str: string) {
 type RGB = [number, number, number];
 
 export function hashToRGB(hash: number) {
+  console.log(hash)
   return Array.from({ length: 3 }).map(
-    (_, idx) => parseInt(String(hash / (256 ^ idx)), 10) % 256,
+    (_, idx) => parseInt(String(Math.abs(hash) / (256 ^ idx)), 10) % 256,
   ) as RGB;
 }
 
