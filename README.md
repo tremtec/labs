@@ -19,7 +19,6 @@ curl -sSfL http://localhost:8000/install | bash
 curl -sSfL https://labs.tremtec.com/install | bash
 ```
 
-
 ### Usage
 
 Here we have some useful commands:

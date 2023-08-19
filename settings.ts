@@ -39,7 +39,7 @@ export const github = {
   scope: "read:user" as const,
 };
 
-const RAW_REPO = "https://raw.githubusercontent.com/tremtec/labs/main"
+const RAW_REPO = "https://raw.githubusercontent.com/tremtec/labs/main";
 export const INSTALL_CMD = `#! /bin/bash
 # deno does not allow remote config yet: https://github.com/denoland/deno/issues/13488
 # deno install --unstable --allow-env -c ${RAW_REPO}/deno.json -f ${RAW_REPO}/cli/tt.ts 
