@@ -9,6 +9,17 @@ This project implements the web app for
 - [Fresh](https://fresh.deno.dev/)
 - [Ansible Vault](https://docs.ansible.com/ansible/latest/vault_guide/)
 
+### Install CLI
+
+```sh
+# local
+curl -sSfL http://localhost:8000/install | bash
+
+# prod
+curl -sSfL https://labs.tremtec.com/install | bash
+```
+
+
 ### Usage
 
 Here we have some useful commands:

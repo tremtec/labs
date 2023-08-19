@@ -5,6 +5,7 @@
     "start": "deno run --unstable -A --watch=static/,routes/ dev.ts",
     "test": "deno test --unstable -A",
     "cli": "deno run --unstable -A cli/tt.ts",
+    "compile:cli": "deno compile --unstable --allow-read --allow-write cli/tt.ts",
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts"
   },
