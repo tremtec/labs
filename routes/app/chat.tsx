@@ -37,18 +37,18 @@ export default defineRoute(async (req) => {
 
   return (
     <>
-      <div class="p-4 text-left grid gap-2">
+      <div class="p-4 text-left grid gap-2 max-h-[calc(100vh-15rem)]">
         <h1 class="text-2xl">
           Chat @{username}
         </h1>
 
-        <div class="messages grid gap-2 font-mono bg(gray-300 dark:gray-700) h-24 p-4 rounded overflow-auto">
+        <div class="messages grid gap-2 flex-1 font-mono bg(gray-300 dark:gray-700) p-4 rounded overflow-auto">
           {messages.length === 0
             ? <p class="text-center">No message found yet</p>
             : messages.map((m) => <MessageDisplay m={m} username={username} />)}
         </div>
 
-        <form method="POST" class="flex">
+        <form method="POST" class="flex ">
           <input
             autoFocus
             type="text"
@@ -82,17 +82,17 @@ function MessageDisplay({ m, username }: MessageDisplayProps) {
   const user = m.sender === username ? "me" : m.sender;
   const date = dateFormatter(m.createdAt);
   const color = textToRGB(username);
-  const usernameStyle = `text-[rgb(${color})] px-1`;
+  const usernameStyle = `text-[rgb(${color})] px-1 text-xs`;
   return (
     <p
       key={m.id}
-      class={`${m.sender === username ? "text-bold" : ""} flex flex-row gap-2`}
+      class={`${m.sender === username ? "text-bold" : ""} flex flex-row gap-1`}
     >
-      <span class={usernameStyle}>
+      <p class={usernameStyle}>
         @{user}
-      </span>
-      <span class="flex-1">{m.message}</span>
-      <span class="text-xs">- {date}</span>
+        <span class="text-xs">- {date}</span>
+      </p>
+      <p>{m.message}</p>
     </p>
   );
 }
