@@ -9,7 +9,6 @@ export function hashCode(str: string) {
 type RGB = [number, number, number];
 
 export function hashToRGB(hash: number) {
-  console.log(hash)
   return Array.from({ length: 3 }).map(
     (_, idx) => parseInt(String(Math.abs(hash) / (256 ^ idx)), 10) % 256,
   ) as RGB;
