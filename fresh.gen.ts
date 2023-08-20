@@ -2,36 +2,40 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/_app.tsx";
-import * as $1 from "./routes/_layout.tsx";
-import * as $2 from "./routes/api/auth/github/callback.ts";
-import * as $3 from "./routes/api/auth/github/index.ts";
-import * as $4 from "./routes/api/auth/github/refresh.ts";
-import * as $5 from "./routes/api/auth/github/webhook.ts";
-import * as $6 from "./routes/api/auth/logout.ts";
-import * as $7 from "./routes/app/_layout.tsx";
-import * as $8 from "./routes/app/_middleware.ts";
-import * as $9 from "./routes/app/chat.tsx";
-import * as $10 from "./routes/app/index.tsx";
-import * as $11 from "./routes/index.tsx";
-import * as $12 from "./routes/install.tsx";
+import * as $0 from "./routes/_404.tsx";
+import * as $1 from "./routes/_500.tsx";
+import * as $2 from "./routes/_app.tsx";
+import * as $3 from "./routes/_layout.tsx";
+import * as $4 from "./routes/api/auth/github/callback.ts";
+import * as $5 from "./routes/api/auth/github/index.ts";
+import * as $6 from "./routes/api/auth/github/refresh.ts";
+import * as $7 from "./routes/api/auth/github/webhook.ts";
+import * as $8 from "./routes/api/auth/logout.ts";
+import * as $9 from "./routes/app/_layout.tsx";
+import * as $10 from "./routes/app/_middleware.ts";
+import * as $11 from "./routes/app/chat.tsx";
+import * as $12 from "./routes/app/index.tsx";
+import * as $13 from "./routes/index.tsx";
+import * as $14 from "./routes/install.tsx";
 import * as $$0 from "./islands/ThemeSwitcher.tsx";
 
 const manifest = {
   routes: {
-    "./routes/_app.tsx": $0,
-    "./routes/_layout.tsx": $1,
-    "./routes/api/auth/github/callback.ts": $2,
-    "./routes/api/auth/github/index.ts": $3,
-    "./routes/api/auth/github/refresh.ts": $4,
-    "./routes/api/auth/github/webhook.ts": $5,
-    "./routes/api/auth/logout.ts": $6,
-    "./routes/app/_layout.tsx": $7,
-    "./routes/app/_middleware.ts": $8,
-    "./routes/app/chat.tsx": $9,
-    "./routes/app/index.tsx": $10,
-    "./routes/index.tsx": $11,
-    "./routes/install.tsx": $12,
+    "./routes/_404.tsx": $0,
+    "./routes/_500.tsx": $1,
+    "./routes/_app.tsx": $2,
+    "./routes/_layout.tsx": $3,
+    "./routes/api/auth/github/callback.ts": $4,
+    "./routes/api/auth/github/index.ts": $5,
+    "./routes/api/auth/github/refresh.ts": $6,
+    "./routes/api/auth/github/webhook.ts": $7,
+    "./routes/api/auth/logout.ts": $8,
+    "./routes/app/_layout.tsx": $9,
+    "./routes/app/_middleware.ts": $10,
+    "./routes/app/chat.tsx": $11,
+    "./routes/app/index.tsx": $12,
+    "./routes/index.tsx": $13,
+    "./routes/install.tsx": $14,
   },
   islands: {
     "./islands/ThemeSwitcher.tsx": $$0,

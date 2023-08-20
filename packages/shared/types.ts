@@ -1,7 +1,7 @@
 import { JSX } from "preact/jsx-runtime";
 
 export type WithChildren = {
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[] | string;
 };
 
 export type Falsy = undefined | false | null;
