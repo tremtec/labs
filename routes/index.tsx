@@ -1,4 +1,4 @@
-import { github, site } from "#/settings.ts";
+import { site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
 import { defineRoute } from "$fresh/server.ts";
 import { visitsService } from "~/services/visits.ts";
@@ -29,9 +29,7 @@ export default defineRoute(async () => {
           <p class="text-xs">{textPercentage}</p>
         </div>
 
-        <form action={github.signInUrl}>
-          <button title="login via github">Github</button>
-        </form>
+        <a href="/login">Login</a>
       </div>
     </>
   );
