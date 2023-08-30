@@ -17,10 +17,8 @@ const Link = ({ href = "", text = "", path = "" }) => (
   <a
     href={href}
     class={cls(
-      "py-1 px-2 rounded-md border-1 border-transparent",
-      "hover:bg-gray-200 dark:hover:bg-gray-700",
-      "hover:border-gray-500 dark:hover:border-gray-300",
-      href === path && "bg-gray-200 dark:bg-gray-700",
+      "btn btn-ghost btn-sm",
+      href === path && "btn-outline",
     )}
   >
     {text}
