@@ -36,6 +36,7 @@ export const github = {
   refreshUrl: "/api/auth/github/refresh",
   logoutUrl: "/api/auth/logout",
   signInUrl: "/api/auth/github",
+  dashboardUrl: "/app",
   scope: "read:user" as const,
 };
 
