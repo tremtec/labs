@@ -1,7 +1,6 @@
 import { JSX } from "preact";
 import { IS_BROWSER } from "$fresh/runtime.ts";
 import { useSignal } from "@preact/signals";
-import { Button } from "~/components/Button.tsx";
 import Gear from "~/icon/Gear.tsx";
 import Moon from "~/icon/Moon.tsx";
 import Sun from "~/icon/Sun.tsx";
@@ -15,8 +14,8 @@ export default function ThemeSwitcher(
   const { selectedTheme, system, toggle } = useTheme(theme);
 
   return (
-    <Button
-      class="border-none rounded-full p-2 active:outline-none focus:outline-none"
+    <button
+      class="btn btn-circle btn-ghost border-none rounded-full p-2 active:outline-none focus:outline-none"
       disabled={!IS_BROWSER}
       onClick={() => toggle(selectedTheme.value)}
       onContextMenu={(e) => {
@@ -25,7 +24,7 @@ export default function ThemeSwitcher(
       }}
     >
       {IS_BROWSER ? iconTheme(selectedTheme.value) : <Dots />}
-    </Button>
+    </button>
   );
 }
 
