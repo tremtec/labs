@@ -31,9 +31,7 @@ const Avatar = ({ userProfile }: WithUserProfile) => {
   return (
     <a class="relative btn btn-ghost btn-circle" href={github.dashboardUrl}>
       <div class="avatar online">
-        <div
-          class="w-8 rounded-full"
-          // onClick={() => isOpen.value = !isOpen.value}
+        <div class="w-8 rounded-full" // onClick={() => isOpen.value = !isOpen.value}
         >
           <img src={userProfile.avatarUrl} title={userProfile.name} />
         </div>

@@ -3,9 +3,10 @@ import { Plugin } from "$fresh/server.ts";
 const DAISY_UI_CDN = "https://cdn.jsdelivr.net/npm/daisyui@3.6.4/dist/full.css";
 // const TW_SCRIPT = "https://cdn.tailwindcss.com";
 
-const minify = (content: string) => content
-  .replace(/\n/ig, " ")
-  .replace(/\s+/ig, " ");
+const minify = (content: string) =>
+  content
+    .replace(/\n/ig, " ")
+    .replace(/\s+/ig, " ");
 
 export async function setupDaisy() {
   const [

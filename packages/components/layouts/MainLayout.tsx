@@ -3,7 +3,9 @@ import { NavBar } from "~/components/NavBar.tsx";
 import { WithChildren } from "~/shared/types.ts";
 import { WithUserProfile } from "#/entities/userProfile.ts";
 
-export default function MainLayout(props: WithChildren & Partial<WithUserProfile>) {
+export default function MainLayout(
+  props: WithChildren & Partial<WithUserProfile>,
+) {
   return (
     <div class="h-screen">
       <Meta />

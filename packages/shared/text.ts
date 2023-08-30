@@ -1,7 +1,7 @@
 export function hashCode(str: string) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
-    hash = (str.charCodeAt(i) ^ i)  + ((hash << 5) - hash);
+    hash = (str.charCodeAt(i) ^ i) + ((hash << 5) - hash);
   }
   return Math.abs(hash);
 }
