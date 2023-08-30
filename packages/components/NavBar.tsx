@@ -1,9 +1,10 @@
 import ThemeSwitcher from "#/islands/ThemeSwitcher.tsx";
-import { site } from "#/settings.ts";
+import { github, site } from "#/settings.ts";
 import TremTecLogo from "~/icon/TremTecLogo.tsx";
 import GithubIcon from "~/icon/GitHubIcon.tsx";
+import { WithUserProfile } from "#/entities/userProfile.ts";
 
-export const NavBar = () => (
+export const NavBar = ({ userProfile }: Partial<WithUserProfile>) => (
   <div class="flex items-center justify-between gap-4 px-4 py-8 mx-auto max-w-screen-md">
     <a href="/">
       <Logo />
@@ -12,9 +13,20 @@ export const NavBar = () => (
     <div class="flex gap-2 justify-center items-center">
       <ThemeSwitcher />
 
-      <a href={site.repository} target="_blank">
-        <GithubIcon />
-      </a>
+      {userProfile
+        ? (
+          <div class="avatar online">
+            <div class="w-24 rounded-full">
+              <img src={userProfile.avatarUrl} title={userProfile.name} />
+            </div>
+          </div>
+        )
+        : (
+          <a class="btn btn-outline" href={github.signInUrl}>
+            <GithubIcon />
+            Sign In
+          </a>
+        )}
     </div>
   </div>
 );

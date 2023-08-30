@@ -1,9 +1,8 @@
-import { github, site } from "#/settings.ts";
+import { site } from "#/settings.ts";
 import { logger } from "~/shared/logging.ts";
 import { defineRoute } from "$fresh/server.ts";
 import { visitsService } from "~/services/visits.ts";
 import TremTecLogo from "~/icon/TremTecLogo.tsx";
-import GithubIcon from "~/icon/GitHubIcon.tsx";
 
 export default defineRoute(async () => {
   const data = await visitsService.getVisits();
@@ -24,17 +23,6 @@ export default defineRoute(async () => {
         </h1>
 
         <h2 class="text-sm">{site.subTitle}</h2>
-
-        <form action={github.signInUrl}>
-          <button
-            title="login via github"
-            class="btn btn-primary"
-            type="submit"
-          >
-            <GithubIcon />
-            Login
-          </button>
-        </form>
 
         <div class="text-gray-500 text-sm">
           <p>{textVisits}</p>
