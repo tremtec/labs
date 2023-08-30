@@ -14,13 +14,7 @@ export const NavBar = ({ userProfile }: Partial<WithUserProfile>) => (
       <ThemeSwitcher />
 
       {userProfile
-        ? (
-          <div class="avatar online">
-            <div class="w-24 rounded-full">
-              <img src={userProfile.avatarUrl} title={userProfile.name} />
-            </div>
-          </div>
-        )
+        ? <Avatar userProfile={userProfile} />
         : (
           <a class="btn btn-outline" href={github.signInUrl}>
             <GithubIcon />
@@ -30,6 +24,37 @@ export const NavBar = ({ userProfile }: Partial<WithUserProfile>) => (
     </div>
   </div>
 );
+
+const Avatar = ({ userProfile }: WithUserProfile) => {
+  // const isOpen = useSignal(false);
+  const isOpen = false;
+  return (
+    <a class="relative btn btn-ghost btn-circle" href={github.dashboardUrl}>
+      <div class="avatar online">
+        <div
+          class="w-8 rounded-full"
+          // onClick={() => isOpen.value = !isOpen.value}
+        >
+          <img src={userProfile.avatarUrl} title={userProfile.name} />
+        </div>
+      </div>
+
+      {isOpen && (
+        <ul class="menu absolute right-[-2rem] bg-base-200 w-56 rounded-box">
+          <li>
+            <a>Item 1</a>
+          </li>
+          <li>
+            <a>Item 2</a>
+          </li>
+          <li>
+            <a>Item 3</a>
+          </li>
+        </ul>
+      )}
+    </a>
+  );
+};
 
 const Logo = () => (
   <span class="flex items-center gap-2">
