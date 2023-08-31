@@ -7,7 +7,7 @@ export default function MainLayout(
   props: WithChildren & Partial<WithUserProfile>,
 ) {
   return (
-    <div class="h-screen">
+    <div class="min-h-screen">
       <Meta />
       <NavBar userProfile={props.userProfile} />
       <div class="p-4 mx-auto max-w-screen-md text-center flex flex-col gap-8 items-center">
