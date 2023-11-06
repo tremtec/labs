@@ -4,9 +4,19 @@ import { chat } from "~/repositories/chat.dao.ts";
 import { Button } from "~/components/Button.tsx";
 import { logger } from "~/shared/logging.ts";
 import { raise } from "~/shared/exceptions.ts";
-import { Message, MessageInputSchema } from "#/entities/chat.ts";
+import { Message, MessageInput, MessageInputSchema } from "#/entities/chat.ts";
 import { dateFormatter } from "~/shared/date.ts";
 import { textToRGB } from "~/shared/text.ts";
+
+function processCommand(msg: MessageInput) {
+  switch (msg.message) {
+    case ":del":
+    case ":delete":
+      return chat.deleteAllMessages();
+    default:
+      return chat.addMessage(msg);
+  }
+}
 
 export const handler: Handlers = {
   async POST(req) {
@@ -24,8 +34,9 @@ export const handler: Handlers = {
       return Response.redirect(url);
     }
 
-    logger.debug({ input });
-    await chat.addMessage(input.data);
+    logger.debug("processing msg input", { input });
+
+    await processCommand(input.data);
 
     return Response.redirect(req.url);
   },

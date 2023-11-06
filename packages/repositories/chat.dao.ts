@@ -42,6 +42,23 @@ class ChatDao {
 
     return messages;
   }
+
+  async deleteMessage(message: Message) {
+    const { ok } = await this.db
+      .atomic()
+      .delete([this.prefixKey, message.id])
+      .delete([this.prefixSortedKey, message.createdAt.getTime()])
+      .commit();
+
+    if (!ok) raise("unable to delete message");
+  }
+
+  async deleteAllMessages() {
+    const msgs = await this.listMessages();
+    await Promise.allSettled(
+      msgs.map((m) => this.deleteMessage(m)),
+    );
+  }
 }
 
 export const chat = new ChatDao(kv);
