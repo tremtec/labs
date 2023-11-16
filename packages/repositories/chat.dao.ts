@@ -3,7 +3,7 @@ import {
   Message,
   MessageInput,
   MessageSchema,
-} from "#/entities/chat.ts";
+} from "~/entities/chat.ts";
 import { raise } from "~/shared/exceptions.ts";
 import { kv } from "~/repositories/db.ts";
 import { logger } from "~/shared/logging.ts";

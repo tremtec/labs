@@ -1,4 +1,4 @@
-import { Task, TaskSchema } from "#/entities/task.ts";
+import { Task, TaskSchema } from "~/entities/task.ts";
 import { raise } from "~/shared/exceptions.ts";
 import { kv } from "~/repositories/db.ts";
 import { logger } from "~/shared/logging.ts";

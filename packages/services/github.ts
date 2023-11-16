@@ -6,7 +6,7 @@ import {
   setCookie,
 } from "$std/http/cookie.ts";
 import { github } from "#/settings.ts";
-import { UserProfile, UserProfileSchema } from "#/entities/userProfile.ts";
+import { UserProfile, UserProfileSchema } from "~/entities/userProfile.ts";
 import { raise } from "~/shared/exceptions.ts";
 import { logger } from "~/shared/logging.ts";
 
