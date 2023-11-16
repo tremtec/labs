@@ -14,7 +14,7 @@
     "#/": "./",
     "~/": "./packages/",
     "$std/": "https://deno.land/std@0.197.0/",
-    "$fresh/": "https://deno.land/x/fresh@1.5.2/",
+    "$fresh/": "https://deno.land/x/fresh@1.5.4/",
     "cliffy/": "https://deno.land/x/cliffy@v1.0.0-rc.2/",
     "zod": "https://deno.land/x/zod@v3.21.4/mod.ts",
     "preact": "https://esm.sh/preact@10.18.1",
