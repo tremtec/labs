@@ -1,4 +1,4 @@
-import { TaskSchema } from "#/entities/task.ts";
+import { TaskSchema } from "./task.ts";
 import * as assert from "$std/assert/mod.ts";
 import { raise } from "~/shared/exceptions.ts";
 
