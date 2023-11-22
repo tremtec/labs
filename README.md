@@ -7,7 +7,7 @@ This project implements the web app for
 
 - [Deno](https://deno.land/)
 - [Fresh](https://fresh.deno.dev/)
-- [Ansible Vault](https://docs.ansible.com/ansible/latest/vault_guide/)
+- [GPG](https://www.gnupg.org/)
 
 ### Install CLI
 
